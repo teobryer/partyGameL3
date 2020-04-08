@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
-<body style="height:90vh" >
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,41 +44,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </form>
   </div>
 </nav>
-
-
-
-
-<div class="h-100 container-fluid">
-
-<div class=" h-100 row align-middle">
-    <div class="col my-auto" style="text-align:center">
-     <svg width="310" height="310">
-  <circle cx="155" cy="155" r="150" fill="blue" />
-  <text x="50%" y="50%" text-anchor="middle" fill="white" font-size="25px" font-family="Arial" dy=".3em">Partie rapide</text>
-Sorry, your browser does not support inline SVG.
-</svg>
-    </div>
-    
-    <div class="col my-auto" style="text-align:center">
-     <svg width="310" height="310">
-  <circle cx="155" cy="155" r="150" fill="red" />
-  <text x="50%" y="50%" text-anchor="middle" fill="white" font-size="25px" font-family="Arial" dy=".3em">Partie personnalis&eacutee</text>
-Sorry, your browser does not support inline SVG.
-</svg>
-    </div>
-    
-    <div class="col my-auto"  style="text-align:center">
-    	<svg width="310" height="310">
-  <circle cx="155" cy="155" r="150" fill="#aeaeae" />
-  <text x="50%" y="50%" text-anchor="middle" fill="white" font-size="25px" font-family="Arial" dy=".3em">Partie &agrave distance</text>
-Sorry, your browser does not support inline SVG.
-</svg>
-		
-    </div>
- </div>
-
+<div class="container">
 </div>
-
 
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
