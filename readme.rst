@@ -2,8 +2,6 @@
 Party Game Web
 ###################
 
-Encadrant : Benoit Da Mota
-
 L’idée est de produire un jeu d’ambiance (party game) adapté au format web. La
 partie doit se dérouler en mono-écran pour la convivialité (l’idée n’est pas que les
 joueurs soient scotchés chacun à leur écran) et donc en tour par tour ou en
