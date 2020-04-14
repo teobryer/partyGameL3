@@ -19,7 +19,7 @@ class Home extends CI_Controller {
 		echo "<br/><br/>";
 		print_r($this->home_model->get_Tag());
 		echo "<br/><br/>";
-		//print_r($this->home_model->get_Forfeit_Tag());
+		print_r($this->home_model->get_Forfeit_Tag());
 	}
 	
 	

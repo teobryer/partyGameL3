@@ -22,8 +22,9 @@ public function get_Tag()
 public function get_Forfeit_Tag()
     {  
         $this->db->select('*');
-        $this->db->from('FORFEIT');
-        $this->db->join('TAG', 'TAG.idForfeit = FORFEIT.idForfeit');
+        $this->db->from('FORFEIT_TAG');
+        $this->db->join('FORFEIT', 'FORFEIT.idForfeit = FORFEIT_TAG.idForfeit');
+        $this->db->join('TAG', 'TAG.idTag = FORFEIT_TAG.idTag');
         $query = $this->db->get();
         return $query->result_array();
     }  
