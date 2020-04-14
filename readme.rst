@@ -29,8 +29,9 @@ Léo MASSY
 
 
 ***************
-Acknowledgement
+Encadrement 
 ***************
+Faculté des sciences Angers Informatique - 
+Benoit Da Mota enseignants chercheur
 
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+
