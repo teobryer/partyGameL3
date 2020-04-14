@@ -11,7 +11,7 @@ coopération locale.
 Informations développement
 *******************
 
-Langages utilisés : PHP, Javascript::
+Langages utilisés : PHP, Javascript ::
 Utilisation du framemwork CodIgniter
 
 **************************
@@ -24,14 +24,14 @@ http://vps662251.ovh.net/
 Auteurs
 *******************
 
-Téo BRYER::
+Téo BRYER ::
 Léo MASSY
 
 
 ***************
 Encadrement 
 ***************
-Faculté des sciences Angers Informatique::
+Faculté des sciences Angers Informatique ::
 Benoit Da Mota enseignant chercheur
 
 
