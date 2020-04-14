@@ -7,11 +7,12 @@ partie doit se dérouler en mono-écran pour la convivialité (l’idée n’est
 joueurs soient scotchés chacun à leur écran) et donc en tour par tour ou en
 coopération locale.
 
-*******************
+**************************************
 Informations développement
-*******************
+**************************************
 
-Langages utilisés : PHP, Javascript ::
+Langages utilisés : PHP, Javascript
+
 Utilisation du framemwork CodIgniter
 
 **************************
@@ -24,14 +25,16 @@ http://vps662251.ovh.net/
 Auteurs
 *******************
 
-Téo BRYER ::
+Téo BRYER 
+
 Léo MASSY
 
 
 ***************
 Encadrement 
 ***************
-Faculté des sciences Angers Informatique ::
-Benoit Da Mota enseignant chercheur
+Faculté des sciences Angers Informatique 
+
+Benoit Da Mota - Enseignant chercheur
 
 
