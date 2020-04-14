@@ -22,14 +22,14 @@ http://vps662251.ovh.net/
 *******************
 Auteurs
 *******************
-Téo BRYER
-Léo MASSY
+|Téo BRYER
+|Léo MASSY
 
 
 ***************
 Encadrement 
 ***************
-Faculté des sciences Angers Informatique - 
-Benoit Da Mota enseignants chercheur
+|Faculté des sciences Angers Informatique - 
+|Benoit Da Mota enseignants chercheur
 
 
