@@ -15,7 +15,7 @@ class Game extends CI_Controller {
         $this->load->library('session');
        // $this->tab_Forfeit = ForfeitModel::getAllForfeit();
         $this->tab_Personn = array("Tom","Elsa","Luc", "Mahtieu", "Lea","Lisa","Dylan","Martin","Elodie");
-        $this->tab_BgColor = array("text-white bg-primary","text-white bg-secondary","text-white bg-success", "text-white bg-danger", "text-white bg-warning","text-white bg-info","bg-light","text-white bg-dark");           
+        $this->tab_BgColor = array("text-white bg-primary","text-white bg-secondary","text-white bg-success", "text-white bg-danger", "text-white bg-warning","text-white bg-info","text-white bg-dark");           
     }
      
     
