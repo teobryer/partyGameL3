@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-//require_once ('../models/ForfeitModel.php'); // chargement du modèle
+//require_once ('../models/ForfeitModel.php'); // chargement du modï¿½le
 class Game extends CI_Controller {
     
     
@@ -12,7 +12,7 @@ class Game extends CI_Controller {
     {
         parent::__construct();
         $this->load->helper('url');
-       // $this->load->library('session');
+        $this->load->library('session');
        // $this->tab_Forfeit = ForfeitModel::getAllForfeit();
         $this->tab_Personn = array("Tom","Elsa","Luc", "Mahtieu", "Lea","Lisa","Dylan","Martin","Elodie");
       
@@ -38,10 +38,13 @@ class Game extends CI_Controller {
 	
 	public function index()
 	{
-	    //$this->drawPledge();
+        //$this->drawPledge();
+        $data['title'] = "Game";
 	    $data['gage'] = $this->drawPledge();
-	    $data['personne'] = $this->drawPersonne();
-	    $this->load->view('game_page', $data);
+        $data['personne'] = $this->drawPersonne();
+        $this->load->view('Templates/header', $data);
+        $this->load->view('game_page', $data);
+        $this->load->view('Templates/footer');
 	}
 	
 	
