@@ -16,6 +16,10 @@ class Home extends CI_Controller {
 	{
 		$this->load->view('home_page');
 		print_r($this->home_model->get_Forfeit());
+		echo "<br/><br/>";
+		print_r($this->home_model->get_Tag());
+		echo "<br/><br/>";
+		print_r($this->home_model->get_Forfeit_Tag());
 	}
 	
 	
