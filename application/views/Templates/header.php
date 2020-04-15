@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<a class="nav-link" href="<?php site_url() ?>game">Game</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?php site_url() ?>parameterds">Parameters</a>
+					<a class="nav-link" href="<?php site_url() ?>parameters">Parameters</a>
 				</li>
 			</ul>
 			<?php 
