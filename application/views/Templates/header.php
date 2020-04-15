@@ -17,8 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
-<body class="bg-secondary" style="height:90vh">
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body class="bg-secondary" style="height:92vh">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height:8vh">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
