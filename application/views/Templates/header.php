@@ -25,11 +25,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<a class="nav-link" href="<?php site_url() ?>game">Game</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?php site_url() ?>parameters">Parameters</a>
+					<a class="nav-link" href="<?php site_url() ?>parameterds">Parameters</a>
 				</li>
 			</ul>
 			<?php 
-				if (isset($_SESSION['username']))
-					echo $_SESSION['username']; ?>
+				if ($this->session->has_userdata('username'))
+					echo "<a class='nav-link' href='";
+					echo site_url();
+					echo "account'>";
+					echo ucfirst($this->session->userdata('username'));
+					echo "</a>" ?>
 		</div>
 	</nav>
