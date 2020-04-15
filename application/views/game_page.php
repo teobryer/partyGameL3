@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<div class="container">
 
-		<h1>Fait 5 pompes</h1>
+		<h1><?php echo "Gage : ". $gage . " Pour : " .$personne ?></h1>
 
 	</div>
 
