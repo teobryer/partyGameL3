@@ -14,12 +14,18 @@ class Home extends CI_Controller {
     
 	public function index()
 	{
+		//$this->session->userdata('name');
+		$personneTest = array(
+			'username'  => 'johndoe',
+			'email'     => 'johndoe@some-site.com',
+			'logged_in' => TRUE
+		);
+		$this->session->set_userdata($personneTest);
+
+		$data['title'] = "Home";
+		$this->load->view('Templates/header', $data);
 		$this->load->view('home_page');
-		print_r($this->home_model->get_Forfeit());
-		echo "<br/><br/>";
-		print_r($this->home_model->get_Tag());
-		echo "<br/><br/>";
-		print_r($this->home_model->get_Forfeit_Tag());
+		$this->load->view('Templates/footer');
 	}
 	
 	
