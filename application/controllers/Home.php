@@ -14,7 +14,6 @@ class Home extends CI_Controller {
     
 	public function index()
 	{
-		//$this->session->userdata('name');
 		$personneTest = array(
 			'username'  => 'johndoe',
 			'email'     => 'johndoe@some-site.com',
