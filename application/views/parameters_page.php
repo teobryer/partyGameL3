@@ -5,12 +5,19 @@
 				<h1>Parameters</h1>
 			</div>
 			<div class="card-body container">
-				<div class="btn-group" role="group" aria-label="Basic example">
-					<button type="button" class="btn btn-secondary">Male ♂</button>
-					<button type="button" class="btn btn-secondary">Female ♀</button>
+				<div class="container row">
+					<div class="btn-group col-1 ml-auto" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-secondary">♂</button>
+						<button type="button" class="btn btn-secondary">♀</button>
+					</div>
+					<div class="btn-group col-3" role="group" aria-label="Basic example">
+						<input type="text" class="form-control" id="usernameInput"
+							placeholder="username">
+					</div>
+					<div class="btn-group col-1 mr-auto" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-info">+</button>
+					</div>
 				</div>
-				<h3 class="card-title">Male Female</h3>
-				<h3 class="card-text">Input</h3>
 			</div>
 		</div>
 	</div>
