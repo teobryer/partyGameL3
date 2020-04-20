@@ -61,7 +61,7 @@ class Game_Model extends CI_Model{
     {
         $this->db->select('idForfeit, textForfeit, nbConcerned');
         $this->db->from('FORFEIT');
-        $this->db->where('valid = true AND idForfeit=1');
+        $this->db->where('valid = true');
         $query = $this->db->get();
         
         
