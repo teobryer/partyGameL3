@@ -94,8 +94,7 @@ class Game extends CI_Controller {
 	   
 	    $data['num'] = Game::$totalGages;
         $data['title'] = "Game";
-        $personne = $this->drawPledge();
-	    $data['gage'] = $personne;
+        $data['gage'] = $this->drawPledge();
         $data['personne'] = $this->drawPersonne();
         $data['CardColor'] = $this->drawCardColor();
         //print_r($this->actual_Forfeit);
