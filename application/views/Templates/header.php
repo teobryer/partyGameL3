@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <head>
 	<meta charset="utf-8">
-	<title>Party Game 
+	<title>Party Game
 		<?php if (isset($title))
 			echo " - $title";
 		?>
@@ -19,7 +19,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <body class="bg-secondary" style="height:92vh">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height:8vh">
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsiveToggler"
+			aria-controls="navbarResponsiveToggler" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsiveToggler">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
 					<a class="nav-link" href="<?php site_url() ?>home">Home</a>
