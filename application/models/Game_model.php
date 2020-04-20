@@ -61,7 +61,7 @@ class Game_Model extends CI_Model{
     {
         $this->db->select('idForfeit, textForfeit, nbConcerned');
         $this->db->from('FORFEIT');
-        $this->db->where('valid = true');
+        $this->db->where('valid = true AND idForfeit=1');
         $query = $this->db->get();
         
         
@@ -73,6 +73,10 @@ class Game_Model extends CI_Model{
             $query1 = $this->db->query("SELECT TAG.textTag FROM FORFEIT_TAG INNER JOIN TAG ON FORFEIT_TAG.idTag = TAG.idTag WHERE idForfeit = ".$row['idForfeit']);
             foreach( $query1->result_array() as $row1) {
                 $listTag[]= $row1['textTag'];
+            }
+            if( empty($listTag) ){
+            $listTag[]= 'Pas de tag';
+            
             }
             $listForfeit[] = new Forfeit($row['idForfeit'],$row['textForfeit'],$row['nbConcerned'], $listTag);
            

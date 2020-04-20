@@ -9,7 +9,7 @@
 				<h2 class="card-text"><?php echo "Gage : ". ucfirst($gage); ?></h2>
 			</div>
 			<div class="card-footer">
-				<h5>Tag : Alcool, Sports</h5>
+				<h5><?php echo $tags?></h5>
 			</div>
 		</div>
 	</div>

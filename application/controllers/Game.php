@@ -27,14 +27,14 @@ class Game extends CI_Controller {
     public function drawPledge(){
         
         $this->personnConcerned =  array();
-       $actual_Forfeit = $this->tab_Forfeit[array_rand($this->tab_Forfeit)];
+        $this->actual_Forfeit = $this->tab_Forfeit[array_rand($this->tab_Forfeit)];
          
      //  return $actual_Forfeit->getTextForfeit();
        Game::$totalGages ++;
         
        $parameters = array("%1", "%2", "%3");
        $personns   = array();
-       $i = $actual_Forfeit->getNbConcerned()-1;
+       $i = $this->actual_Forfeit->getNbConcerned()-1;
    
        while ($i != 0 ){
   
@@ -44,7 +44,7 @@ class Game extends CI_Controller {
        $i--;
        }
        
-       return str_replace($parameters, $personns, $actual_Forfeit->getTextForfeit());
+       return str_replace($parameters, $personns, $this->actual_Forfeit->getTextForfeit());
     }
     
     public function drawPersonne(){
@@ -60,17 +60,46 @@ class Game extends CI_Controller {
     public function drawCardColor(){
         return $this->tab_BgColor[array_rand($this->tab_BgColor)];
    }
+   
+   public function writeTagsString(){
+       $tags = "Tags : ";
+       $i = 1;
+       foreach( $this->actual_Forfeit->getTagList() as $data) {
+           
+           if ($i == count($this->actual_Forfeit->getTagList())) {
+               $tags = $tags . $data ;
+              
+               
+           }
+           
+           else {
+               
+               $tags = $tags . $data .", ";
+               
+           }
+           
+           $i++;
+          
+          
+       }
+       
+       return $tags;
+       
+   }
 	
 	public function index()
 	{
         //$this->drawPledge();
 	   // print_r($this->tab_Forfeit);
+	   
 	    $data['num'] = Game::$totalGages;
         $data['title'] = "Game";
         $personne = $this->drawPledge();
 	    $data['gage'] = $personne;
         $data['personne'] = $this->drawPersonne();
         $data['CardColor'] = $this->drawCardColor();
+        //print_r($this->actual_Forfeit);
+        $data['tags'] = $this->writeTagsString();
         $this->load->view('Templates/header', $data);
         $this->load->view('game_page', $data);
         $this->load->view('Templates/footer');
