@@ -1,26 +1,53 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 //require_once ('../models/ForfeitModel.php'); // chargement du mod�le
 class Game extends CI_Controller {
     
     
     private $tab_Forfeit;
     private $tab_Personn;
+    private $tab_BgColor;
     private $actual_Forfeit;
-    public static $totalGages;
+    private $totalGages;
     private $personnConcerned;
     
     public function __construct ()
     {
         parent::__construct();
-        Game::$totalGages = 1;
+        $this->load->helper('url');
+        $this->load->model('game_model');
+        $this->load->library('session');
+        
+        if(!$this->session->has_userdata('instancePartie')) {
+        
+            
+        $this->totalGages=1;    
+        $this->personnConcerned =  array();
+       
+        $this->tab_Forfeit = $this->game_model->getAllForfeit();
+        $this->tab_Personn = array("Tom","Elsa","Luc", "Mathieu", "Lea","Lisa","Dylan","Martin","Elodie");
+        $this->tab_BgColor = array("text-white bg-primary","text-white bg-secondary","text-white bg-success", "text-white bg-danger", "text-white bg-warning","text-white bg-info","text-white bg-dark");   
+    
+        
+        }
+        
+        else {
+            
+      // print_r("else");
+        
         $this->personnConcerned =  array();
         $this->load->helper('url');
         $this->load->model('game_model');
         $this->load->library('session');
-        $this->tab_Forfeit = $this->game_model->getAllForfeit();
-        $this->tab_Personn = array("Tom","Elsa","Luc", "Mathieu", "Lea","Lisa","Dylan","Martin","Elodie");
-        $this->tab_BgColor = array("text-white bg-primary","text-white bg-secondary","text-white bg-success", "text-white bg-danger", "text-white bg-warning","text-white bg-info","text-white bg-dark");           
+        $this->totalGages= ($this->session->userdata('instancePartie')->totalGages)+1;
+        $this->tab_Forfeit = $this->session->userdata('instancePartie')->tab_Forfeit;
+        $this->tab_Personn =$this->session->userdata('instancePartie')->tab_Personn;
+        $this->tab_BgColor = $this->session->userdata('instancePartie')->tab_BgColor;
+       
+        }
+        
+        
     }
      
     
@@ -28,9 +55,16 @@ class Game extends CI_Controller {
         
         $this->personnConcerned =  array();
         $this->actual_Forfeit = $this->tab_Forfeit[array_rand($this->tab_Forfeit)];
-         
-     //  return $actual_Forfeit->getTextForfeit();
-       Game::$totalGages ++;
+        
+   
+       
+        if($this->actual_Forfeit->getNbConcerned()== -1) {
+            
+            return $this->actual_Forfeit->getTextForfeit();
+        }
+        
+        else {
+            
         
        $parameters = array("%1", "%2", "%3");
        $personns   = array();
@@ -44,16 +78,27 @@ class Game extends CI_Controller {
        $i--;
        }
        
+      // print_r($personns);
+       
        return str_replace($parameters, $personns, $this->actual_Forfeit->getTextForfeit());
+       
+        }
     }
     
     public function drawPersonne(){
-       $personn =  $this->tab_Personn[ array_rand($this->tab_Personn)];
+        $rand = array_rand($this->tab_Personn);
+       // print_r($rand);
+        $personn =  $this->tab_Personn[$rand];
+      
        if(!in_array( $personn , $this->personnConcerned)) {
             $this->personnConcerned[] = $personn;
+            
             return $personn;
         }
+        else {
          return $this->drawPersonne();
+         
+        }
         
     }
 
@@ -92,17 +137,27 @@ class Game extends CI_Controller {
         //$this->drawPledge();
 	   // print_r($this->tab_Forfeit);
 	   
-	    $data['num'] = Game::$totalGages;
+	    
         $data['title'] = "Game";
-        $personne = $this->drawPledge();
-	    $data['gage'] = $personne;
+        $data['gage'] = $this->drawPledge();
+        if($this->actual_Forfeit->getNbConcerned()== -1) {
+            
+         $data['personne'] = "Tout le monde";
+        }
+        else{
         $data['personne'] = $this->drawPersonne();
+        
+        }
+        $data['num'] = $this->totalGages;
         $data['CardColor'] = $this->drawCardColor();
         //print_r($this->actual_Forfeit);
         $data['tags'] = $this->writeTagsString();
+        
+        $this->session->set_userdata('instancePartie', $this);
         $this->load->view('Templates/header', $data);
         $this->load->view('game_page', $data);
         $this->load->view('Templates/footer');
+      
 	}
 	
 	
