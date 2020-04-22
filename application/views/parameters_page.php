@@ -94,12 +94,12 @@
 				data-size="8" data-style="btn-secondary bg-secondary" data-selected-text-format="count > 6" data-live-search="true"
 				data-live-search-placeholder="Rechercher un tag" data-live-search-style="startsWith" data-live-search-normalize="true"
 				data-multiple-separator=" | " multiple title="Sélectionner des tags à bannir">
-					<option class="bg-secondary text-white">Sport</option>
-					<option class="bg-secondary text-white">Relou</option>
-					<option class="bg-secondary text-white">Débile</option>
-					<option class="bg-secondary text-white">Hot</option>
-					<option class="bg-secondary text-white">Sexe</option>
-					<option class="bg-secondary text-white">Dehors</option>
+					<options>Sport</option>
+					<option>Relou</option>
+					<option>Débile</option>
+					<option>Hot</option>
+					<option>Sexe</option>
+					<option>Dehors</option>
 				</select>
 			</div>
 		</div>
