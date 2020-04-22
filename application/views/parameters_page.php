@@ -90,7 +90,10 @@
 					</div>
 				</div>
 				<!-- Tags à Bannir -->
-				<select class="selectpicker col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12 mt-5" data-max-options="10" data-size="8" data-style="btn-secondary bg-secondary" data-selected-text-format="count > 6" data-live-search="true" multiple title="Sélectionner des tags à bannir">
+				<select class="selectpicker col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12 mt-5" data-max-options="10"
+				data-size="8" data-style="btn-secondary bg-secondary" data-selected-text-format="count > 6" data-live-search="true"
+				data-live-search-placeholder="Rechercher un tag" data-live-search-style="startsWith" data-live-search-normalize="true"
+				data-multiple-separator=" | " multiple title="Sélectionner des tags à bannir">
 					<option class="bg-secondary text-white">Sport</option>
 					<option class="bg-secondary text-white">Relou</option>
 					<option class="bg-secondary text-white">Débile</option>
