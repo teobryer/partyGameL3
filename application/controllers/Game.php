@@ -27,7 +27,7 @@ class Game extends CI_Controller {
        
         $this->tab_Forfeit = $this->game_model->getAllForfeit();
         $this->tab_Personn = array("Tom","Elsa","Luc", "Mathieu", "Lea","Lisa","Dylan","Martin","Elodie");
-        $this->tab_BgColor = array("text-white bg-primary","text-white bg-secondary","text-white bg-success", "text-white bg-danger", "text-white bg-warning","text-white bg-info","text-white bg-dark");   
+        $this->tab_BgColor = array("text-white bg-primary","text-white bg-secondary","text-white bg-success", "text-white bg-danger", "text-white bg-warning","text-white bg-info");   
     
         
         }
@@ -60,7 +60,7 @@ class Game extends CI_Controller {
        
         if($this->actual_Forfeit->getNbConcerned()== -1) {
             
-            return $this->actual_Forfeit->getTextForfeit();
+            return "Tout le monde ". $this->actual_Forfeit->getTextForfeit();
         }
         
         else {
@@ -68,7 +68,7 @@ class Game extends CI_Controller {
         
        $parameters = array("%1", "%2", "%3");
        $personns   = array();
-       $i = $this->actual_Forfeit->getNbConcerned()-1;
+       $i = $this->actual_Forfeit->getNbConcerned();
    
        while ($i != 0 ){
   
@@ -141,15 +141,7 @@ class Game extends CI_Controller {
         $data['title'] = "Game";
         $data['gage'] = $this->drawPledge();
 
-        if($this->actual_Forfeit->getNbConcerned()== -1) {
-            
-         $data['personne'] = "Tout le monde";
-        }
-        else{
-
-        $data['personne'] = $this->drawPersonne();
-        
-        }
+     
         $data['num'] = $this->totalGages;
         $data['CardColor'] = $this->drawCardColor();
         //print_r($this->actual_Forfeit);

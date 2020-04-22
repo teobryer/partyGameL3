@@ -8,8 +8,8 @@
 			
 			<div class="card-body" onclick="window.location='<?php base_url() ?>game'">
 			
-				<h1 class="card-title"><?php echo "Pour " . $personne; ?></h1>
-				<h2 class="card-text"><?php echo "Gage : ". ucfirst($gage); ?></h2>
+				<h1 class="card-title"><?php echo ucfirst($gage); ?></h1>
+				
 				
 			</div>
 			
