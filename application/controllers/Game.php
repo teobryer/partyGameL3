@@ -140,11 +140,13 @@ class Game extends CI_Controller {
 	    
         $data['title'] = "Game";
         $data['gage'] = $this->drawPledge();
+
         if($this->actual_Forfeit->getNbConcerned()== -1) {
             
          $data['personne'] = "Tout le monde";
         }
         else{
+
         $data['personne'] = $this->drawPersonne();
         
         }
