@@ -1,8 +1,8 @@
 <?php
 
-class JsonContent {
-    private $tagList;
-    private $inventory;
+class JsonContent implements JsonSerializable {
+    public $tagList;
+    public $inventory;
     
     function __construct($tagList, $inventory)
     {
@@ -11,7 +11,14 @@ class JsonContent {
        
     }
     
-    
+    public function jsonSerialize()
+    {
+        return
+        [
+            'tagList'   => $this->getTagList(),
+            'inventory' => $this->getInventory()
+        ];
+    }
     public function getTagList(){
         return $this->tagList;
     }
@@ -19,6 +26,10 @@ class JsonContent {
     public function getInventory(){
         return $this->inventory;
     }
+    
+}
+
+class JsonContent1 {
     
 }
 
@@ -36,6 +47,8 @@ class Forfeit {
         $this->nbConcerned = $nb;
         $this->tagList = $list;
     }
+    
+    
     
     public function getTextForfeit(){
         return $this->textForfeit;
@@ -85,6 +98,21 @@ class Game_Model extends CI_Model{
         $this->sexualOrientationDefault = "hetero";
     }
     
+    
+    public function jsonContent(){
+        
+        
+        $inventaire = array("cuillere", "farine");
+        $tags = array("bouffe", "action");
+        
+        $obj = new JsonContent($tags, $inventaire);
+        
+        
+      
+       
+        print_r(json_encode($obj));
+        
+    }
     public function setSexualOrientationDefault($newSexualOrientationDefault){
         $this->sexualOrientationDefault = $newSexualOrientationDefault;
     }
@@ -139,6 +167,23 @@ class Game_Model extends CI_Model{
         }
     }
     public  function getForfeitMandMContexte($men1, $men2, $context=null){}
+    
+    public function getForfeitById($id){
+        
+        $this->db->select('jsonContent');
+        $this->db->from('FORFEIT');
+        $this->db->where('valid = true AND idForfeit='.$id.'');
+        $query = $this->db->get();
+        
+         $test = $query->result_array()[0]['jsonContent'];
+         
+         print_r($test);
+         
+         $obj = (json_decode($test));
+        
+        // print_r((JsonContent)($obj->getTagList()));
+        
+    }
     
 }
 

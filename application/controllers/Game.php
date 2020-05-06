@@ -136,8 +136,9 @@ class Game extends CI_Controller {
 	{
         //$this->drawPledge();
 	   // print_r($this->tab_Forfeit);
-	    $this->game_model->setSexualOrientationDefault('homo');
-	    $this->game_model->getForfeitWandWContext('hetero');
+	   // $this->game_model->setSexualOrientationDefault('homo');
+	
+	    $this->game_model->getForfeitById(3);
 	    
         $data['title'] = "Game";
         $data['gage'] = $this->drawPledge();
