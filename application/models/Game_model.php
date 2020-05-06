@@ -1,10 +1,33 @@
 <?php
 
+class JsonContent {
+    private $tagList;
+    private $inventory;
+    
+    function __construct($tagList, $inventory)
+    {
+        $this->tagList = $tagList;
+        $this->inventory = $inventory;
+       
+    }
+    
+    
+    public function getTagList(){
+        return $this->tagList;
+    }
+    
+    public function getInventory(){
+        return $this->inventory;
+    }
+    
+}
+
 class Forfeit {
     private $idForfeit;
     private $textForfeit;
     private $nbConcerned;
     private $tagList;
+    private $inventory;
     
     function __construct($id, $text, $nb, $list)
     {
@@ -51,10 +74,19 @@ class Forfeit {
     
     }
 class Game_Model extends CI_Model{
+    
+    private $sexualOrientationDefault;
+    private $inventory;
+    
+    
     public function __construct()
     {
         $this->load->database();
-        
+        $this->sexualOrientationDefault = "hetero";
+    }
+    
+    public function setSexualOrientationDefault($newSexualOrientationDefault){
+        $this->sexualOrientationDefault = $newSexualOrientationDefault;
     }
     
     public  function getAllForfeit()
@@ -84,7 +116,32 @@ class Game_Model extends CI_Model{
         
         return $listForfeit;
     }
+    public  function getNbForfeit($nb){}
+    public  function getForfeitWandWContext($context = null){
+        
+        if($context == null){
+            if ($this->sexualOrientationDefault == 'homo') {
+             //   print_r('homo');
+            }
+            else {
+             //   print_r('hetero');
+            }
+        }
+        
+        else {
+            if ($context == 'homo') {
+           //     print_r('homo');
+            }
+            
+            else {
+            //    print_r('hetero');
+            }
+        }
+    }
+    public  function getForfeitMandMContexte($men1, $men2, $context=null){}
     
 }
+
+
 
 ?>
