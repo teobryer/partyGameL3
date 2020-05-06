@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Game extends CI_Controller {
     
     
-    private $tab_Forfeit;
+   
     private $tab_Personn;
     private $tab_BgColor;
     private $actual_Forfeit;
@@ -25,7 +25,7 @@ class Game extends CI_Controller {
         $this->totalGages=1;    
         $this->personnConcerned =  array();
        
-        $this->tab_Forfeit = $this->game_model->getAllForfeit();
+     
         $this->tab_Personn = array("Tom","Elsa","Luc", "Mathieu", "Lea","Lisa","Dylan","Martin","Elodie");
         $this->tab_BgColor = array("text-white bg-primary","text-white bg-secondary","text-white bg-success", "text-white bg-danger", "text-white bg-warning","text-white bg-info");   
     
@@ -41,7 +41,7 @@ class Game extends CI_Controller {
         $this->load->model('game_model');
         $this->load->library('session');
         $this->totalGages= ($this->session->userdata('instancePartie')->totalGages)+1;
-        $this->tab_Forfeit = $this->session->userdata('instancePartie')->tab_Forfeit;
+        
         $this->tab_Personn =$this->session->userdata('instancePartie')->tab_Personn;
         $this->tab_BgColor = $this->session->userdata('instancePartie')->tab_BgColor;
        
@@ -49,12 +49,14 @@ class Game extends CI_Controller {
         
         
     }
+    
+   
      
     
     public function drawPledge(){
         
         $this->personnConcerned =  array();
-        $this->actual_Forfeit = $this->tab_Forfeit[array_rand($this->tab_Forfeit)];
+        $this->actual_Forfeit = $this->game_model->getForfeitById( rand ( 1 ,  $this->game_model->comptTotalForfeit() ) );
         
    
        
@@ -138,7 +140,7 @@ class Game extends CI_Controller {
 	   // print_r($this->tab_Forfeit);
 	   // $this->game_model->setSexualOrientationDefault('homo');
 	
-	    $this->game_model->getForfeitById(3);
+	    
 	    
         $data['title'] = "Game";
         $data['gage'] = $this->drawPledge();
