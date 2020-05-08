@@ -38,9 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</ul>
 			<?php 
 				if ($this->session->has_userdata('username'))
-					echo "<a class='nav-link' href='";
-					echo site_url();
-					echo "account'>";
+					echo "<a class='nav-link' href='".site_url()."account'>";
 					echo ucfirst($this->session->userdata('username'));
 					echo "</a>" ?>
 		</div>

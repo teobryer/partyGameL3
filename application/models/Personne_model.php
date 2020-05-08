@@ -38,8 +38,9 @@ class Personne {
         $this->passwordHashed = $passwordHashed;
     }
     
-    public function getjsonContent(){
-        return $this->jsonContent;
+    public function getjsonContent($champs){
+        $obj = (json_decode($this->jsonContent));
+        return $obj->$champs;
     }
 
     public function setjsonContent($jsonContent){
@@ -58,9 +59,9 @@ class Personne_Model extends CI_Model{
     {
             $this->db->select('*');
             $this->db->from('PERSONNE');
-            $this->db->where("email = $email");
+            $this->db->where('email = "'.$email.'"');
             $query = $this->db->get();
-            return $query->result();
+            return $query->result_array()[0];
     }  
         
         
