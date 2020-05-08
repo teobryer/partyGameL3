@@ -1,8 +1,8 @@
 <?php
 
-class JsonContent {
-    private $tagList;
-    private $inventory;
+class JsonContent implements JsonSerializable {
+    public $tagList;
+    public $inventory;
     
     function __construct($tagList, $inventory)
     {
@@ -11,7 +11,14 @@ class JsonContent {
        
     }
     
-    
+    public function jsonSerialize()
+    {
+        return
+        [
+            'tagList'   => $this->getTagList(),
+            'inventory' => $this->getInventory()
+        ];
+    }
     public function getTagList(){
         return $this->tagList;
     }
@@ -22,6 +29,8 @@ class JsonContent {
     
 }
 
+
+
 class Forfeit {
     private $idForfeit;
     private $textForfeit;
@@ -29,13 +38,16 @@ class Forfeit {
     private $tagList;
     private $inventory;
     
-    function __construct($id, $text, $nb, $list)
+    function __construct($id, $text, $nb, $list, $list2)
     {
         $this->idForfeit = $id;
         $this->textForfeit = $text;
         $this->nbConcerned = $nb;
         $this->tagList = $list;
+        $this->inventory = $list2;
     }
+    
+    
     
     public function getTextForfeit(){
         return $this->textForfeit;
@@ -85,37 +97,26 @@ class Game_Model extends CI_Model{
         $this->sexualOrientationDefault = "hetero";
     }
     
+    
+    public function jsonContent(){
+        
+        
+        $inventaire = array("cuillere", "farine");
+        $tags = array("bouffe", "action");
+        
+        $obj = new JsonContent($tags, $inventaire);
+        
+        
+      
+       
+        print_r(json_encode($obj));
+        
+    }
     public function setSexualOrientationDefault($newSexualOrientationDefault){
         $this->sexualOrientationDefault = $newSexualOrientationDefault;
     }
     
-    public  function getAllForfeit()
-    {
-        $this->db->select('idForfeit, textForfeit, nbConcerned');
-        $this->db->from('FORFEIT');
-        $this->db->where('valid = true');
-        $query = $this->db->get();
-        
-        
-       
-        
-        foreach ($query->result_array()as $row)
-        {
-            $listTag=  array();
-            $query1 = $this->db->query("SELECT TAG.textTag FROM FORFEIT_TAG INNER JOIN TAG ON FORFEIT_TAG.idTag = TAG.idTag WHERE idForfeit = ".$row['idForfeit']);
-            foreach( $query1->result_array() as $row1) {
-                $listTag[]= $row1['textTag'];
-            }
-            if( empty($listTag) ){
-            $listTag[]= 'Pas de tag';
-            
-            }
-            $listForfeit[] = new Forfeit($row['idForfeit'],$row['textForfeit'],$row['nbConcerned'], $listTag);
-           
-        }
-        
-        return $listForfeit;
-    }
+  
     public  function getNbForfeit($nb){}
     public  function getForfeitWandWContext($context = null){
         
@@ -139,6 +140,42 @@ class Game_Model extends CI_Model{
         }
     }
     public  function getForfeitMandMContexte($men1, $men2, $context=null){}
+    
+    public function comptTotalForfeit(){
+        
+        $this->db->select('COUNT(*) as total');
+        $this->db->from('FORFEIT');
+        $this->db->where('valid = true ');
+        $query = $this->db->get();
+        
+        return  $query->result_array()[0]['total'];
+        
+    }
+    public function getForfeitById($id){
+        
+        $this->db->select('*');
+        $this->db->from('FORFEIT');
+        $this->db->where('valid = true AND idForfeit='.$id.'');
+        $query = $this->db->get();
+        
+         $jsonContent = $query->result_array()[0]['jsonContent'];
+         $id =  $query->result_array()[0]['idForfeit'];
+         $text =  $query->result_array()[0]['textForfeit'];
+         $nb =  $query->result_array()[0]['nbConcerned'];
+         
+         print_r("1".$jsonContent."2.");
+         
+         $obj = (json_decode($jsonContent));
+         
+         
+         $inventory = ($obj->inventory);
+         $tags =  ($obj->tagList);
+         
+         return new Forfeit($id, $text, $nb, $tags, $inventory);
+        
+         //print_r((objet)($obj->getTagList()));
+        
+    }
     
 }
 
