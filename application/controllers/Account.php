@@ -15,30 +15,17 @@ class Account extends CI_Controller {
     
 	public function index()
 	{
-        //$CurrentPersonne = $this->getAPersonne("tommyleboss@gmail.com");
-        $CurrentPersonne = $this->getAPersonne("daveleboss@gmail.com");
+                                                            //"tommyleboss@gmail.com"
+        $CurrentPersonne = $this->personne_model->getPersonne("daveleboss@gmail.com");
         $data['title'] = "Account";
         $data['guests'] = $CurrentPersonne->getjsonContent("guests");
         //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
-        //print_r(count((array)$data['guests'])); //NB Guests
+        $data['nbGuests'] = count((array)$data['guests']);
 		$this->load->view('Templates/header', $data);
 		$this->load->view('account_page');
 		$this->load->view('Templates/footer');
 	}
     
-    private function getAPersonne($email)
-    {
-        $personne = $this->personne_model->getPersonne($email);
-        $personneTest = array(
-			'username'          => $personne['username'],
-            'email'             => $personne['email'],
-            'passwordHashed'    => $personne['password'],
-            'jsonContent'       => $personne['jsonContent'],
-			'logged_in'         => TRUE
-		);
-        $this->session->set_userdata($personneTest);
-        return new Personne($personne['username'], $personne['email'], $personne['password'], $personne['jsonContent']);
-    }
 
     private function addGuestAtAPersonne($personne, $guestUsername, $guestInventory, $guestAlcoholFriendly, $guestSex)
     {
@@ -57,7 +44,7 @@ class Account extends CI_Controller {
 
     public function deleteGuestAtAPersonne($guestNum)
     {
-        $personne = $this->getAPersonne($this->session->userdata('email'));
+        $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
         $guests = $personne->getjsonContent("guests");
         $Alljson = $personne->getjsonContent();
         $guests = (array)$guests;
