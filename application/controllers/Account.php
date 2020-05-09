@@ -19,7 +19,7 @@ class Account extends CI_Controller {
         $CurrentPersonne = $this->getAPersonne("daveleboss@gmail.com");
         $data['title'] = "Account";
         $data['guests'] = $CurrentPersonne->getjsonContent("guests");
-        $this->addGuestAtAPersonne($CurrentPersonne, "Nicolas", ["casserole" , "assiettes"], "True", "Male");
+        //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
         //print_r(count((array)$data['guests'])); //NB Guests
 		$this->load->view('Templates/header', $data);
 		$this->load->view('account_page');
@@ -46,13 +46,28 @@ class Account extends CI_Controller {
         $Alljson = $personne->getjsonContent();
         $guests = (array)$guests;
         $guestInventory = "\"".implode('","',$guestInventory)."\"";
-        $guests["guest".(count($guests)+1).""] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'" }');
+        $guests[] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'" }');
         $guests = json_decode(json_encode($guests, JSON_FORCE_OBJECT));
-        //print_r ($guests);
         $Alljson = (array)$Alljson;
         $Alljson['guests'] = $guests;
         $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
         $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
+        header('Location: '.site_url().'account');
+    }
+
+    public function deleteGuestAtAPersonne($guestNum)
+    {
+        $personne = $this->getAPersonne($this->session->userdata('email'));
+        $guests = $personne->getjsonContent("guests");
+        $Alljson = $personne->getjsonContent();
+        $guests = (array)$guests;
+        unset($guests[$guestNum]);
+        $guests = json_decode(json_encode($guests, JSON_FORCE_OBJECT));
+        $Alljson = (array)$Alljson;
+        $Alljson['guests'] = $guests;
+        $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
+        $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
+        header('Location: '.site_url().'account');
     }
 	
 }
