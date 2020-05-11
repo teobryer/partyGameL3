@@ -65,5 +65,14 @@ class Account extends CI_Controller {
 		$this->load->view('login_page');
 		$this->load->view('Templates/footer');
     }
+
+
+    public function register()
+    {
+        $data['title'] = "Register";
+		$this->load->view('Templates/header', $data);
+		$this->load->view('register_page');
+		$this->load->view('Templates/footer');
+    }
 	
 }
