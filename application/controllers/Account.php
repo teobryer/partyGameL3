@@ -56,5 +56,10 @@ class Account extends CI_Controller {
         $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
         header('Location: '.site_url().'account');
     }
+
+    public function login()
+    {
+        //Login page redirect + connexion
+    }
 	
 }
