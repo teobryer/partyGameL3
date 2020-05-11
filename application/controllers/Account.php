@@ -15,30 +15,17 @@ class Account extends CI_Controller {
     
 	public function index()
 	{
-        //$CurrentPersonne = $this->getAPersonne("tommyleboss@gmail.com");
-        $CurrentPersonne = $this->getAPersonne("daveleboss@gmail.com");
+                                                            //"tommyleboss@gmail.com"
+        $CurrentPersonne = $this->personne_model->getPersonne("daveleboss@gmail.com");
         $data['title'] = "Account";
         $data['guests'] = $CurrentPersonne->getjsonContent("guests");
-        $this->addGuestAtAPersonne($CurrentPersonne, "Nicolas", ["casserole" , "assiettes"], "True", "Male");
-        //print_r(count((array)$data['guests'])); //NB Guests
+        //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
+        $data['nbGuests'] = count((array)$data['guests']);
 		$this->load->view('Templates/header', $data);
 		$this->load->view('account_page');
 		$this->load->view('Templates/footer');
 	}
     
-    private function getAPersonne($email)
-    {
-        $personne = $this->personne_model->getPersonne($email);
-        $personneTest = array(
-			'username'          => $personne['username'],
-            'email'             => $personne['email'],
-            'passwordHashed'    => $personne['password'],
-            'jsonContent'       => $personne['jsonContent'],
-			'logged_in'         => TRUE
-		);
-        $this->session->set_userdata($personneTest);
-        return new Personne($personne['username'], $personne['email'], $personne['password'], $personne['jsonContent']);
-    }
 
     private function addGuestAtAPersonne($personne, $guestUsername, $guestInventory, $guestAlcoholFriendly, $guestSex)
     {
@@ -46,13 +33,33 @@ class Account extends CI_Controller {
         $Alljson = $personne->getjsonContent();
         $guests = (array)$guests;
         $guestInventory = "\"".implode('","',$guestInventory)."\"";
-        $guests["guest".(count($guests)+1).""] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'" }');
+        $guests[] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'" }');
         $guests = json_decode(json_encode($guests, JSON_FORCE_OBJECT));
-        //print_r ($guests);
         $Alljson = (array)$Alljson;
         $Alljson['guests'] = $guests;
         $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
         $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
+        header('Location: '.site_url().'account');
+    }
+
+    public function deleteGuestAtAPersonne($guestNum)
+    {
+        $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+        $guests = $personne->getjsonContent("guests");
+        $Alljson = $personne->getjsonContent();
+        $guests = (array)$guests;
+        unset($guests[$guestNum]);
+        $guests = json_decode(json_encode($guests, JSON_FORCE_OBJECT));
+        $Alljson = (array)$Alljson;
+        $Alljson['guests'] = $guests;
+        $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
+        $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
+        header('Location: '.site_url().'account');
+    }
+
+    public function login()
+    {
+        //Login page redirect + connexion
     }
 	
 }

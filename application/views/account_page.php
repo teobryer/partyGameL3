@@ -7,6 +7,7 @@
 			<div class="card-body container">
 				<!-- Input Personne -->
 				<h3 class="col-lg-12 col-xl-12 col-md-12" >Add/Remove Guest from your Account</h3>
+				<small class="col-lg-12 col-xl-12 col-md-12" >You have <?php echo $nbGuests?> guests</small>
 				<div class="container row mx-auto mb-5">
 					<div class="btn-group col-lg-2 col-xl-2 col-md-2 ml-auto" role="group">
 						<button type="button" class="btn btn-secondary">♂</button>
@@ -28,16 +29,16 @@
 				</div>
 				<!-- Personnes -->
 				<?php 
-					foreach ($guests as $guest) {
+					foreach ($guests as $key => $guest) {
 					echo "<div class='container row mx-auto mb-2'>
 					<div class='btn-group col-lg-11 col-xl-11 col-md-11 col-sm-11 col-10 ml-auto' role='group'>
 						<button type='button' class='close col-lg-2 col-xl-2 col-md-2 col-sm-2 col-4'
 							aria-label='Close'>
-							<span aria-hidden='true'>&times;</span>
+							<a class='text-danger' href='".site_url()."account/deleteGuestAtAPersonne/".$key."'><span aria-hidden='true'>&times;</span></a>
 						</button>
 						<h3 class='btn-group col-lg-10 col-xl-10 col-md-10 col-sm-10 col-8 card-text align-text-bottom'
-							role='group'>". ((array)$guest)['username'].
-						"</h3>
+							role='group'>".((array)$guest)['username']." "; if (((array)$guest)['sex'] == "Male"){ echo "♂"; } else { echo "♀"; }; 
+						echo "</h3>
 					</div>
 					<div class='btn-group col-lg-1 col-xl-1 col-md-1 col-sm-1 col-2 mr-auto' role='group'>
 						<input class='form-check-input' type='checkbox' value='' id='AlcoolCheckbox' "; if (((array)$guest)['alcoholFriendly'] == "True"){ echo "checked"; }; echo ">

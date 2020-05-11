@@ -65,7 +65,16 @@ class Personne_Model extends CI_Model{
             $this->db->from('PERSONNE');
             $this->db->where('email = "'.$email.'"');
             $query = $this->db->get();
-            return $query->result_array()[0];
+            $personne = $query->result_array()[0];
+            $personneTest = array(
+			'username'          => $personne['username'],
+            'email'             => $personne['email'],
+            'passwordHashed'    => $personne['password'],
+            'jsonContent'       => $personne['jsonContent'],
+			'logged_in'         => TRUE
+		    );
+            $this->session->set_userdata($personneTest);
+            return new Personne($personne['username'], $personne['email'], $personne['password'], $personne['jsonContent']);
     }  
     
     public  function setjsonContentPersonne($email, $jsonContent)
