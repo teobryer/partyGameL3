@@ -60,6 +60,10 @@ class Account extends CI_Controller {
     public function login()
     {
         //Login page redirect + connexion
+        $data['title'] = "Login";
+		$this->load->view('Templates/header', $data);
+		$this->load->view('login_page');
+		$this->load->view('Templates/footer');
     }
 	
 }
