@@ -15,13 +15,6 @@ class Home extends CI_Controller {
     
 	public function index()
 	{
-		$personneTest = array(
-			'username'  => 'johndoe',
-			'email'     => 'johndoe@some-site.com',
-			'logged_in' => TRUE
-		);
-		$this->session->set_userdata($personneTest);
-
 		$data['title'] = "Home";
 		$this->load->view('Templates/header', $data);
 		$this->load->view('home_page');

@@ -7,7 +7,7 @@
 			<div class="card-body container">
 				<!-- Input Personne -->
 				<h3 class="col-lg-12 col-xl-12 col-md-12" >Add/Remove Guest from your Account</h3>
-				<small class="col-lg-12 col-xl-12 col-md-12" >You have <?php echo $nbGuests?> guests</small>
+				<small class="col-lg-12 col-xl-12 col-md-12" ><span class="badge badge-secondary">You have <?php //echo $nbGuests?> guests</span></small>
 				<div class="container row mx-auto mb-5">
 					<div class="btn-group col-lg-2 col-xl-2 col-md-2 ml-auto" role="group">
 						<button type="button" class="btn btn-secondary">♂</button>
@@ -20,15 +20,16 @@
 						<button type="button" class="btn btn-secondary">+</button>
 					</div>
 				</div>
-				<!-- Titles -->
-				<div class="container row col-12 mx-auto mb-2">
-					<div class="col-lg-10 col-xl-10 col-md-10 col-sm-10 col-8">
+				<?php 
+				if (isset($guests)){
+					//<!-- Titles -->
+					echo "<div class='container row col-12 mx-auto mb-2'>
+					<div class='col-lg-10 col-xl-10 col-md-10 col-sm-10 col-8'>
 						<!-- Empty Layout Div -->
 					</div>
-					<p class="col-lg-2 col-xl-2 col-md-2 col-sm-2 col-4">Alcool</p>
-				</div>
-				<!-- Personnes -->
-				<?php 
+					<p class='col-lg-2 col-xl-2 col-md-2 col-sm-2 col-4'>Alcool</p>
+					</div>";
+					//<!-- Personnes -->
 					foreach ($guests as $key => $guest) {
 					echo "<div class='container row mx-auto mb-2'>
 					<div class='btn-group col-lg-11 col-xl-11 col-md-11 col-sm-11 col-10 ml-auto' role='group'>
@@ -44,6 +45,7 @@
 						<input class='form-check-input' type='checkbox' value='' id='AlcoolCheckbox' "; if (((array)$guest)['alcoholFriendly'] == "True"){ echo "checked"; }; echo ">
 					</div></div>";
 					};
+				}
 				?>
 				
 			</div>
