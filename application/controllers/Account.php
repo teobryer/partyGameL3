@@ -109,6 +109,17 @@ class Account extends CI_Controller {
 		$this->load->view('Templates/footer');
     }
 
+    public function inventory()
+    {
+        $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+        $inventory = $personne->getjsonContent("inventory");
+        $inventory = (array)$inventory;
+        $data['inventory'] = $inventory;
+        $this->load->view('Templates/header', $data);
+		$this->load->view('inventory_page');
+        $this->load->view('Templates/footer');
+    }
+
     public function disconnect()
     {
         unset(

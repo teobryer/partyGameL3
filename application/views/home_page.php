@@ -1,6 +1,6 @@
 	<div class="h-100 container-fluid">
 
-		<div class=" h-100 row align-middle">
+		<div class="h-100 row align-middle">
 			<div class="col my-auto" style="text-align:center">
 				<a href='<?php base_url() ?>game'>
 					<svg width="310" height="310">
