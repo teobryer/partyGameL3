@@ -4,57 +4,39 @@
 			<div class="card-header">
 				<h1>Register</h1>
 			</div>
-			<div class="card-body container">
+			<div class="card-body container text-center">
 				<!-- Input Personne -->
-				<div class="container row mx-auto mb-5">
-					<div class="btn-group col-lg-6 col-xl-6 col-md-6" role="group">
-						<input type="email" class="form-control" id="emailInput" placeholder="example@email.com">
-					</div>
-					<div class="btn-group col-lg-6 col-xl-6 col-md-6" role="group">
-						<input type="password" class="form-control" id="passwordInput" placeholder="*****************">
-					</div>
-					<div class="btn-group col-lg-5 col-xl-5 col-md-5" role="group">
-						<input type="input" class="form-control" id="usernameInput" placeholder="username">
-					</div>
-					<div class="btn-group col-lg-5 col-xl-5 col-md-5" role="group">
-						<input type="input" class="form-control" id="yearsoldInput" placeholder="18">
-					</div>
-					<div class="btn-group col-lg-2 col-xl-2 col-md-2 mr-auto" role="group">
-						<button type="button" class="btn btn-secondary">+</button>
-					</div>
+				<div class="container text-center form-group">
+					<?php //echo validation_errors(); ?>
+					<?php //echo form_open('account/register') ?>
+						<div class="btn-group col-lg-5 col-xl-5 col-md-12 col-12 mb-3 row" role="group">
+							<label class="col-lg-5 col-xl-5 col-md-12 col-12" for="username">Username :</label>
+							<input type="input" name="username" class="form-control col-lg-7 col-xl-7 col-md-12 col-12" id="usernameInput" placeholder="example" required>
+						</div>
+						<div class="btn-group col-lg-5 col-xl-5 col-md-12 col-12 mb-3 row" role="group">
+							<label class="col-lg-5 col-xl-5 col-md-12 col-12" for="yearsOld">Years old ? :</label>
+							<input type="number" min="1" max="130" name="yearsOld" data-bind="value:replyNumber" class="form-control col-lg-7 col-xl-7 col-md-12 col-12" id="yearsOldInput" placeholder="18 years old" required>
+						</div>
+						<div class="btn-group col-lg-5 col-xl-5 col-md-12 col-12 mb-3 row" role="group">
+							<label class="col-lg-5 col-xl-5 col-md-12 col-12" for="email">Email address :</label>
+							<input type="email" name="email" class="form-control col-lg-7 col-xl-7 col-md-12 col-12" id="emailInput" placeholder="example@email.com" required>
+						</div>
+						<div class="btn-group col-lg-5 col-xl-5 col-md-12 col-12 mb-3 row" role="group">
+							<label class="col-lg-5 col-xl-5 col-md-12 col-12" for="password">Password :</label>
+							<input type="password" name="password" class="form-control col-lg-7 col-xl-7 col-md-12 col-12" id="passwordInput" placeholder="*****************" required>
+						</div>
+						<div class="btn-group col-lg-4 col-xl-4 col-md-6 col-12" role="group">
+							<input type="submit" class="btn btn-secondary" name="submit" value="Register" />
+						</div>
+					</form>
 				</div>
-				<div class="btn-group col-lg-2 col-xl-2 col-md-2 mr-auto" role="group">
-					<a href="<?php site_url() ?>login"><button type="button" class="btn btn-secondary">Déjà inscrit ?</button></a>
+			</div>
+			<div class="card-footer">
+				<div class="text-center">
+					<a href="<?php site_url() ?>login"><button type="button" class="btn btn-secondary col-lg-4 col-xl-4 col-md-6 col-10">Déjà inscrit ?</button></a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
-<!--
-<h2>Inscription</h2>
-    <?php //echo validation_errors(); ?>
-    <?php //echo form_open('login/register') ?>
-    <label for="login">Pseudo :</label>
-        <input type="input" name="login" placeholder="Pseudo" maxlength="20" required/>
-        <br>
-    <label for="name">Nom :</label>
-        <input type="input" name="name" placeholder="Nom" maxlength="50" required/>
-        <br>
-    <label for="firstname">Prénom :</label>
-        <input type="input" name="firstname" placeholder="Prénom" maxlength="50" required/>
-        <br>
-    <label for="password">Mot de passe :</label>
-        <input type="password" name="password" placeholder="********" maxlength="100" required/>
-        <br>
-    <label for="passwordverif">Confirmer mot de passe :</label>
-        <input type="password" name="passwordverif" placeholder="********" maxlength="100"required/>
-        <br>
-        <input type="submit" name="submit" value="S'inscrire" />
-        <br>
-    </form>
-    <div>
-        <br>
-        <a href="login">Déjà inscrit ?</a>
-        <br>
-    </div>-->
