@@ -38,13 +38,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</ul>
 			<?php 
 				if ($this->session->has_userdata('email')){
-					echo "<div class='dropdown dropleft'>";
+					echo "<div class='dropdown' >";
 					echo "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
 					echo ucfirst($this->session->userdata('username'));
 					echo "</button>
-						<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-							<a class='dropdown-item' href='".site_url()."account'>Account</a>
-							<a class='dropdown-item' href='".site_url()."account/disconnect'>Disconnect</a>
+						<div class='dropdown-menu' aria-labelledby='dropdownMenuButton' style='right: 0; left: auto;'>
+							<a class='dropdown-item text-primary' href='".site_url()."account' style='li a:hover{background-color: green;}'>Account</a>
+							<a class='dropdown-item text-primary' href='".site_url()."account/disconnect'>Disconnect</a>
 						</div></div>";
 					} ?>
 		</div>

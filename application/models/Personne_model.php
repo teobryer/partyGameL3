@@ -59,6 +59,15 @@ class Personne_Model extends CI_Model{
         $this->load->database();
     }
 
+    public function verificationPersonneLogin($email, $passwordHashed)
+    {
+        $this->db->select('*');
+        $this->db->from('PERSONNE');
+        $this->db->where('email = "'.$email.'" and password = "'.$passwordHashed.'"');
+        $query = $this->db->get();
+        return count($query->result_array());
+    }
+
     public  function getPersonne($email)
     {
             $this->db->select('*');
@@ -85,7 +94,6 @@ class Personne_Model extends CI_Model{
                 'jsonContent' => $jsonContent,
             ];
             $this->db->update('PERSONNE', $data);
-            return 0;
     }  
         
 

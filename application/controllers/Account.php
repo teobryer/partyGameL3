@@ -74,15 +74,26 @@ class Account extends CI_Controller {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
             $password = hash('sha256',$password);
-                //$test = $this->login_model->collector_login($login,$password);
-                //if (!empty($test)){
-            $this->session->set_userdata('email', $email);
-            $CurrentPersonne = $this->personne_model->getPersonne("daveleboss@gmail.com");
-            $data['title'] = "Account";
-            $data['guests'] = $CurrentPersonne->getjsonContent("guests");
-                    //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
-            $data['nbGuests'] = count((array)$data['guests']);
-            $content = 'account_page';
+            $test = $this->personne_model->verificationPersonneLogin($email, $password);
+            if ($test)
+            {
+                $this->session->set_userdata('email', $email);
+                $CurrentPersonne = $this->personne_model->getPersonne($email);
+                $data['title'] = "Account";
+                $data['guests'] = $CurrentPersonne->getjsonContent("guests");
+                //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
+                $data['nbGuests'] = count((array)$data['guests']);
+                $content = 'account_page';
+            } else {
+                $data['title'] = "Login";
+                $content = 'login_page';
+                echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
+                            <h3>Please verify your <strong>Email address</strong> ('".$email."') or your <strong>Password</strong>.</h3>
+                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                            </button>
+                        </div>";
+            }
         }
         $this->load->view('Templates/header', $data);
 		$this->load->view($content);
