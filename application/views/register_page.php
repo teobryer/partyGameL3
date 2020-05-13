@@ -7,8 +7,8 @@
 			<div class="card-body container text-center">
 				<!-- Input Personne -->
 				<div class="container text-center form-group">
-					<?php //echo validation_errors(); ?>
-					<?php //echo form_open('account/register') ?>
+					<?php echo validation_errors(); ?>
+					<?php echo form_open('account/register') ?>
 						<div class="btn-group col-lg-5 col-xl-5 col-md-12 col-12 mb-3 row" role="group">
 							<label class="col-lg-5 col-xl-5 col-md-12 col-12" for="username">Username :</label>
 							<input type="input" name="username" class="form-control col-lg-7 col-xl-7 col-md-12 col-12" id="usernameInput" placeholder="example" required>

@@ -14,12 +14,16 @@ class Parameters extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = "Parameters";
-		$CurrentPersonne = $this->personne_model->getPersonne("daveleboss@gmail.com");
-        $data['guests'] = $CurrentPersonne->getjsonContent("guests");
-		$this->load->view('Templates/header', $data);
-		$this->load->view('parameters_page');
-		$this->load->view('Templates/footer');
+        if ($this->session->has_userdata('email')){
+            $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
+            $data['title'] = "Parameters";
+            $data['guests'] = $CurrentPersonne->getjsonContent("guests");
+            $this->load->view('Templates/header', $data);
+		    $this->load->view('parameters_page');
+            $this->load->view('Templates/footer');
+        } else {
+            header('Location: '.site_url().'account/login');
+        }
 	}
 
 	public function deleteGuestAtAPersonne($guestNum)
