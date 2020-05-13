@@ -23,8 +23,38 @@
 						<button type="button" class="btn btn-secondary">+</button>
 					</div>
 				</div>
+				<div class="btn-group col-lg-2 col-xl-2 col-md-2 mr-auto" role="group">
+					<a href="<?php site_url() ?>login"><button type="button" class="btn btn-secondary">Déjà inscrit ?</button></a>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
+<!--
+<h2>Inscription</h2>
+    <?php //echo validation_errors(); ?>
+    <?php //echo form_open('login/register') ?>
+    <label for="login">Pseudo :</label>
+        <input type="input" name="login" placeholder="Pseudo" maxlength="20" required/>
+        <br>
+    <label for="name">Nom :</label>
+        <input type="input" name="name" placeholder="Nom" maxlength="50" required/>
+        <br>
+    <label for="firstname">Prénom :</label>
+        <input type="input" name="firstname" placeholder="Prénom" maxlength="50" required/>
+        <br>
+    <label for="password">Mot de passe :</label>
+        <input type="password" name="password" placeholder="********" maxlength="100" required/>
+        <br>
+    <label for="passwordverif">Confirmer mot de passe :</label>
+        <input type="password" name="passwordverif" placeholder="********" maxlength="100"required/>
+        <br>
+        <input type="submit" name="submit" value="S'inscrire" />
+        <br>
+    </form>
+    <div>
+        <br>
+        <a href="login">Déjà inscrit ?</a>
+        <br>
+    </div>-->

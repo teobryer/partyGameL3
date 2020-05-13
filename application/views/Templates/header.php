@@ -18,8 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
-<body class="<?php if (isset($CardColor)) echo $CardColor; else echo "bg-secondary"; ?>" style="height:92vh">
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body class="py-auto <?php if (isset($CardColor)) echo $CardColor; else echo "bg-secondary"; ?>" style="height:92vh">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsiveToggler"
 			aria-controls="navbarResponsiveToggler" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -27,21 +27,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="collapse navbar-collapse" id="navbarResponsiveToggler">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="<?php site_url() ?>home">Home</a>
+					<a class="nav-link" href="<?php echo site_url() ?>home">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?php site_url() ?>game">Game</a>
+					<a class="nav-link" href="<?php echo site_url() ?>game">Game</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?php site_url() ?>parameters">Parameters</a>
+					<a class="nav-link" href="<?php echo site_url() ?>parameters">Parameters</a>
 				</li>
 			</ul>
 			<?php 
-				if ($this->session->has_userdata('username'))
-					echo "<a class='nav-link' href='";
-					site_url();
-					echo "account'>";
+				if ($this->session->has_userdata('email')){
+					echo "<div class='dropdown dropleft'>";
+					echo "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
 					echo ucfirst($this->session->userdata('username'));
-					echo "</a>" ?>
+					echo "</button>
+						<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+							<a class='dropdown-item' href='".site_url()."account'>Account</a>
+							<a class='dropdown-item' href='".site_url()."account/disconnect'>Disconnect</a>
+						</div></div>";
+					} ?>
 		</div>
 	</nav>

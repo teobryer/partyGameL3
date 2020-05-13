@@ -7,7 +7,7 @@
 			<div class="card-body container">
 				<!-- Input Personne -->
 				<h3 class="col-lg-12 col-xl-12 col-md-12" >Add/Remove Guest from your Account</h3>
-				<small class="col-lg-12 col-xl-12 col-md-12" >You have <?php echo $nbGuests?> guests</small>
+				<small class="col-lg-12 col-xl-12 col-md-12" ><span class="badge badge-secondary">You have <?php echo $nbGuests?> guests</span></small>
 				<div class="container row mx-auto mb-5">
 					<div class="btn-group col-lg-2 col-xl-2 col-md-2 ml-auto" role="group">
 						<button type="button" class="btn btn-secondary">♂</button>

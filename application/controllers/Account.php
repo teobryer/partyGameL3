@@ -15,15 +15,17 @@ class Account extends CI_Controller {
     
 	public function index()
 	{
-                                                            //"tommyleboss@gmail.com"
-        $CurrentPersonne = $this->personne_model->getPersonne("daveleboss@gmail.com");
-        $data['title'] = "Account";
-        $data['guests'] = $CurrentPersonne->getjsonContent("guests");
-        //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
-        $data['nbGuests'] = count((array)$data['guests']);
-		$this->load->view('Templates/header', $data);
-		$this->load->view('account_page');
-		$this->load->view('Templates/footer');
+        if ($this->session->has_userdata('email')){
+            $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
+            $data['title'] = "Account";
+            $data['guests'] = $CurrentPersonne->getjsonContent("guests");
+            $data['nbGuests'] = count((array)$data['guests']);
+            $this->load->view('Templates/header', $data);
+		    $this->load->view('account_page');
+            $this->load->view('Templates/footer');
+        } else {
+            header('Location: '.site_url().'account/login');
+        }
 	}
     
 
@@ -60,10 +62,31 @@ class Account extends CI_Controller {
     public function login()
     {
         //Login page redirect + connexion
-        $data['title'] = "Login";
-		$this->load->view('Templates/header', $data);
-		$this->load->view('login_page');
-		$this->load->view('Templates/footer');
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('email','Email address', 'required');
+        $this->form_validation->set_rules('password','Password', 'required');
+        if($this->form_validation->run() === FALSE)
+        {
+            $data['title'] = "Login";
+            $content = 'login_page';
+        } else {
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+            $password = hash('sha256',$password);
+                //$test = $this->login_model->collector_login($login,$password);
+                //if (!empty($test)){
+            $this->session->set_userdata('email', $email);
+            $CurrentPersonne = $this->personne_model->getPersonne("daveleboss@gmail.com");
+            $data['title'] = "Account";
+            $data['guests'] = $CurrentPersonne->getjsonContent("guests");
+                    //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
+            $data['nbGuests'] = count((array)$data['guests']);
+            $content = 'account_page';
+        }
+        $this->load->view('Templates/header', $data);
+		$this->load->view($content);
+        $this->load->view('Templates/footer');
     }
 
 
@@ -73,6 +96,15 @@ class Account extends CI_Controller {
 		$this->load->view('Templates/header', $data);
 		$this->load->view('register_page');
 		$this->load->view('Templates/footer');
+    }
+
+    public function disconnect()
+    {
+        unset(
+            $_SESSION['username'],
+            $_SESSION['email']
+        );
+        header('Location: '.site_url().'account');
     }
 	
 }
