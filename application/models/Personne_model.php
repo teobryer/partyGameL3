@@ -68,7 +68,7 @@ class Personne_Model extends CI_Model{
         return count($query->result_array());
     }
 
-    public  function getPersonne($email)
+    public function getPersonne($email)
     {
             $this->db->select('*');
             $this->db->from('PERSONNE');
@@ -86,7 +86,7 @@ class Personne_Model extends CI_Model{
             return new Personne($personne['username'], $personne['email'], $personne['password'], $personne['jsonContent']);
     }  
     
-    public  function setjsonContentPersonne($email, $jsonContent)
+    public function setjsonContentPersonne($email, $jsonContent)
     {
             $this->db->where('email = "'.$email.'"');
             $this->db->from('PERSONNE');
@@ -94,8 +94,32 @@ class Personne_Model extends CI_Model{
                 'jsonContent' => $jsonContent,
             ];
             $this->db->update('PERSONNE', $data);
+    } 
+
+    public function insertPersonne($username, $email, $passwordHashed)
+    {
+            $dataPersonne = array(
+                'username'          => $username,
+                'email'             => $email,
+                'password'          => $passwordHashed,
+                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\"}"
+            );
+            $personneTest = array(
+                'username'          => $username,
+                'email'             => $email,
+                'passwordHashed'    => $passwordHashed,
+                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\"}",
+                'logged_in'         => TRUE
+                );
+            $this->db->insert('PERSONNE', $dataPersonne);
+            $this->session->set_userdata($personneTest);
+    } 
+    
+    public function getAllInventory()
+    {
+            $query = $this->db->get('INVENTORY');
+            return $query->result_array();
     }  
-        
 
 }
 
