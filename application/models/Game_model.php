@@ -155,26 +155,143 @@ class Game_Model extends CI_Model{
         
         $this->db->select('*');
         $this->db->from('FORFEIT');
-        $this->db->where('valid = true AND idForfeit='.$id.'');
+        $this->db->where('valid = true AND idForfeit='.$id);
         $query = $this->db->get();
         
-         $jsonContent = $query->result_array()[0]['jsonContent'];
-         $id =  $query->result_array()[0]['idForfeit'];
-         $text =  $query->result_array()[0]['textForfeit'];
-         $nb =  $query->result_array()[0]['nbConcerned'];
-         
-         print_r("1".$jsonContent."2.");
-         
-         $obj = (json_decode($jsonContent));
-         
-         
-         $inventory = ($obj->inventory);
-         $tags =  ($obj->tagList);
-         
-         return new Forfeit($id, $text, $nb, $tags, $inventory);
+      
+        return $this->transformQueryToForfeit($query);
         
-         //print_r((objet)($obj->getTagList()));
+       
         
+    }
+    
+    public function transformQueryToForfeit($query){
+        
+        $jsonContent = $query->result_array()[0]['jsonContent'];
+        $id =  $query->result_array()[0]['idForfeit'];
+        $text =  $query->result_array()[0]['textForfeit'];
+        $nb =  $query->result_array()[0]['nbConcerned'];
+        
+       
+        
+        $obj = (json_decode($jsonContent));
+        
+        
+        $inventory = ($obj->inventory);
+        $tags =  ($obj->tagList);
+        
+        return new Forfeit($id, $text, $nb, $tags, $inventory);
+        
+    }
+    
+    public function getForfeitByIncludingTags($tagList){
+           
+        $this->db->select('*');
+        $this->db->from('FORFEIT');
+        $this->db->where("valid = true AND  JSON_CONTAINS(jsonContent,'".$this->transformArrayForJsonContains($tagList)."' , '$.tagList')");
+        $this->db->order_by('rand()');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $this->transformQueryToForfeit($query);
+    }
+    
+    public function getForfeitByExcludingTags($tagList){
+        
+     
+        $this->db->select('*');
+        $this->db->from('FORFEIT');
+        $this->db->where("valid = true AND not JSON_CONTAINS(jsonContent,'".$this->transformArrayForJsonContains($tagList)."' , '$.tagList')");
+        $this->db->order_by('rand()');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $this->transformQueryToForfeit($query);
+    }
+    
+    public function getForfeitByIncludingInventory($inventory){
+         
+        $this->db->select('*');
+        $this->db->from('FORFEIT');
+        $this->db->where("valid = true AND  JSON_CONTAINS(jsonContent,'".$this->transformArrayForJsonContains($inventory)."' , '$.inventory')");
+        $this->db->order_by('rand()');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $this->transformQueryToForfeit($query);
+    }
+    
+    public function getForfeitByExcludingInventory($inventory){
+        
+      
+        $this->db->select('*');
+        $this->db->from('FORFEIT');
+        $this->db->where("valid = true AND not JSON_CONTAINS(jsonContent,'".$this->transformArrayForJsonContains($inventory)."' , '$.inventory')");
+        $this->db->order_by('rand()');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $this->transformQueryToForfeit($query);
+    }
+    
+    public function getForfeitByIncludingAllTagsOnly($tagList){
+        $reverse = $this->ReverseListTag($tagList);
+       print_r( $this->transformArrayForJsonContains($reverse));
+       // print_r($reverse);
+        $this->db->select('*');
+        $this->db->from('FORFEIT');
+        $this->db->where("valid = true and JSON_CONTAINS(jsonContent,'".$this->transformArrayForJsonContains($tagList)."' , '$.tagList') AND ".$this->ExclusionTags($reverse));
+        $this->db->order_by('rand()');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $this->transformQueryToForfeit($query);
+        
+        
+        
+        
+    }
+    
+    public function ReverseListTag($tagList){
+        $whereCondition='';
+        foreach ($tagList as $oneTag ) {
+           $whereCondition = $whereCondition." textTag !='".$oneTag."' AND";
+            
+        }
+        $whereCondition = substr($whereCondition,0,-3);
+        
+        $this->db->select('*');
+        $this->db->from('TAG');
+        $this->db->where($whereCondition);
+        $query = $this->db->get();
+        $reverseList = array();
+        foreach ($query->result_array() as $row)
+        {
+            $reverseList[]=$row['textTag'];
+        }
+        
+        return $reverseList;
+        
+    }
+    
+    public function ExclusionTags($tagList){
+        $whereCondition='';
+        foreach ($tagList as $oneTag ) {
+            $whereCondition = $whereCondition.' not JSON_CONTAINS(jsonContent,'."'".'["'.$oneTag.'"]'."'".' , '."'$.tagList'".') AND';
+            
+        }
+        $whereCondition = substr($whereCondition,0,-3);
+        
+        
+        
+        return $whereCondition;
+        
+    }
+    
+    public function transformArrayForJsonContains($list){
+        $arrayString='[';
+        foreach ($list as $oneItem ) {
+            $arrayString =$arrayString.'"'.$oneItem.'",';
+            
+        }
+        $arrayString = substr($arrayString,0,-1);
+        $arrayString=$arrayString.']';
+        return $arrayString;
     }
     
 }
