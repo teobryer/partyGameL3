@@ -11,28 +11,36 @@
 					<?php echo $nbGuests?> guests</span></small>
 					<?php echo validation_errors(); ?>
 					<?php echo form_open('account/addGuest') ?>
-						<div class="container row mx-auto mb-5">
-							<div class="btn-group col-lg-2 col-xl-2 col-md-2 ml-auto btn-group-toggle" data-toggle="buttons">
-								<label class="btn btn-secondary active">
-									<input type="radio" name="male" id="male" class="btn btn-secondary" checked>♂
-								</label>
-								<label class="btn btn-secondary">
-									<input type="radio" name="female" id="female" class="btn btn-secondary">♀
-								</label>
-							</div>
-							<div class="btn-group col-lg-8 col-xl-8 col-md-8" role="group">
-								<input type="text" class="form-control" name="username" id="usernameInput"
-									placeholder="username" required>
-							</div>
-							<div class="btn-group col-lg-2 col-xl-2 col-md-2 mr-auto" role="group">
-								<button type="submit" class="btn btn-secondary">+</button>
-							</div>
+					<div class="container form-row mx-auto align-items-center">
+					<div class="btn-group col-lg-2 col-xl-2 col-md-2 mx-auto btn-group-toggle" data-toggle="buttons">
+						<label class="btn btn-secondary active">
+							<input type="radio" name="male" id="male" class="btn btn-secondary" checked>♂
+						</label>
+						<label class="btn btn-secondary">
+							<input type="radio" name="female" id="female" class="btn btn-secondary">♀
+						</label>
+					</div>
+					<div class="btn-group col-lg-6 col-xl-6 col-md-6 mx-auto" role="group">
+						<input type="text" class="form-control" name="username" id="usernameInput"
+							placeholder="username" required>
+					</div>
+					<div class="col-auto">
+						<div class="form-check mb-2 mx-auto">
+							<input class="form-check-input" type="checkbox" id="alcohol" name="alcohol">
+							<label class="form-check-label" for="autoSizingCheck">
+								Alcohol ?
+							</label>
 						</div>
-					</form>
+					</div>
+					<div class="btn-group col-lg-2 col-xl-2 col-md-2 mx-auto" role="group">
+						<button type="submit" class="btn btn-secondary">+</button>
+					</div>
+				</div>
+				</form>
 				<?php 
 				if (isset($guests)){
 					//<!-- Titles -->
-					echo "<div class='container row col-12 mx-auto mb-2'>
+					echo "<div class='container row col-12 mx-auto mb-2 mt-4'>
 					<div class='col-lg-10 col-xl-10 col-md-10 col-sm-10 col-8'>
 						<!-- Empty Layout Div -->
 					</div>
@@ -51,7 +59,7 @@
 						echo "</h3>
 					</div>
 					<div class='btn-group col-lg-1 col-xl-1 col-md-1 col-sm-1 col-2 mr-auto' role='group'>
-						<input class='form-check-input' type='checkbox' value='' id='AlcoolCheckbox' "; if (((array)$guest)['alcoholFriendly'] == "True"){ echo "checked"; }; echo ">
+						<input class='form-check-input' type='checkbox' value='' id='AlcoolCheckbox' disabled "; if (((array)$guest)['alcoholFriendly'] == "True"){ echo "checked"; }; echo ">
 					</div></div>";
 					};
 				}

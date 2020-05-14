@@ -38,12 +38,18 @@ class Parameters extends CI_Controller {
         {
             $username = $this->input->post('username');
             $female = $this->input->post('female');
+            $alcohol = $this->input->post('alcohol');
             if ($female == "on"){
                 $genre = "Female";
             } else {
                 $genre = "Male";
             }
-            $this->addGuestAtAPersonne($CurrentPersonne, $username, ["casserole" , "assiettes"], "True", $genre);
+            if ($alcohol == "on"){
+                $alcoholFriendly = "True";
+            } else {
+                $alcoholFriendly = "False";
+            }
+            $this->addGuestAtAPersonne($CurrentPersonne, $username, ["casserole" , "assiettes"], $alcoholFriendly, $genre);
         }
     }
     
