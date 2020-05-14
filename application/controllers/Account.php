@@ -39,8 +39,13 @@ class Account extends CI_Controller {
         if($this->form_validation->run() === TRUE)
         {
             $username = $this->input->post('username');
-            $male = $this->input->post('male');
-            $this->addGuestAtAPersonne($CurrentPersonne, $username, ["casserole" , "assiettes"], "True", "Female");
+            $female = $this->input->post('female');
+            if ($female == "on"){
+                $genre = "Female";
+            } else {
+                $genre = "Male";
+            }
+            $this->addGuestAtAPersonne($CurrentPersonne, $username, ["casserole" , "assiettes"], "True", $genre);
         }
     }
     
