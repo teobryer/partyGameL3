@@ -59,7 +59,9 @@ class Game extends CI_Controller {
       //  $this->actual_Forfeit = $this->game_model->getForfeitById( rand ( 1 ,  $this->game_model->comptTotalForfeit() ) );
       // $this->actual_Forfeit = $this->game_model->getForfeitByExcludingTags(array("relou"));
       //  $this->actual_Forfeit = $this->game_model->getForfeitByIncludingInventory(array("table"));
-        $this->actual_Forfeit = $this->game_model-> getForfeitByIncludingAllTagsOnly(array("hot","action","social"));
+     //   $this->actual_Forfeit = $this->game_model-> getForfeitByIncludingAllTagsOnly(array("hot","action","social"));
+        
+        $this->actual_Forfeit = $this->game_model->getForfeitAdvanded( 2, array("relou", "defi"), array("table", "chausette"));
        
         if($this->actual_Forfeit->getNbConcerned()== -1) {
             

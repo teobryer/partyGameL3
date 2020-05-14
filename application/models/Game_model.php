@@ -283,6 +283,20 @@ class Game_Model extends CI_Model{
         
     }
     
+    public function ExclusionInventory($inventory){
+        $whereCondition='';
+        foreach ($inventory as $oneItem ) {
+            $whereCondition = $whereCondition.' not JSON_CONTAINS(jsonContent,'."'".'["'.$oneItem.'"]'."'".' , '."'$.inventory'".') AND';
+            
+        }
+        $whereCondition = substr($whereCondition,0,-3);
+        
+        
+        
+        return $whereCondition;
+        
+    }
+    
     public function transformArrayForJsonContains($list){
         $arrayString='[';
         foreach ($list as $oneItem ) {
@@ -292,6 +306,22 @@ class Game_Model extends CI_Model{
         $arrayString = substr($arrayString,0,-1);
         $arrayString=$arrayString.']';
         return $arrayString;
+    }
+    
+    public function getForfeitAdvanded( $nbConcernedMax, $tagListExlude, $inventoryExclude){
+       
+        
+        $this->db->select('*');
+        $this->db->from('FORFEIT');
+        $this->db->where($this->ExclusionInventory($inventoryExclude)." AND ". $this->ExclusionTags($tagListExlude)." AND nbConcerned <=".$nbConcernedMax);
+        $this->db->order_by('rand()');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $this->transformQueryToForfeit($query);
+        
+        
+        
+        
     }
     
 }
