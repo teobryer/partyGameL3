@@ -8,7 +8,15 @@
 				<!-- Items -->
 				<?php 
 					foreach ($inventory as $key => $item) {
-						echo "<h2 class='mr-2'><span class='badge badge-dark'>".ucfirst($item)."</span></h2>";
+						echo "<h2 class='mr-2'><span class='badge badge-success'><span class='badge badge-danger'>&times;</span> ".ucfirst($item)."</span></h2>";
+					};
+				?>
+			</div>
+			<div class="card-body container row mx-auto">
+				<!-- Items -->
+				<?php 
+					foreach ($inventory as $key => $item) {
+						echo "<h2 class='mr-2'><span class='badge badge-danger'>".ucfirst($item)." <span class='badge badge-success'>+</span></span></h2>";
 					};
 				?>
 			</div>

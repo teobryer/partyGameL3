@@ -6,7 +6,7 @@ class Personne {
     private $passwordHashed;
     private $jsonContent;
     
-    function __construct($username, $email, $passwordHashed, $jsonContent=null)
+    function __construct($username, $email="null", $passwordHashed="null", $jsonContent=null)
     {
         $this->username = $username;
         $this->email = $email;
