@@ -42,7 +42,7 @@
 					<div class='btn-group col-lg-11 col-xl-11 col-md-11 col-sm-11 col-10 ml-auto' role='group'>
 						<button type='button' class='close col-lg-2 col-xl-2 col-md-2 col-sm-2 col-4'
 							aria-label='Close'>
-							<a class='text-danger text-decoration-none' href='".site_url()."account/deleteGuestAtAPersonne/".$key."'><span aria-hidden='true'>&times;</span></a>
+							<a class='text-danger text-decoration-none' href='".site_url()."account/deleteGuestAtAPersonne/".$key."'><span class='badge badge-danger'>&times;</span></a>
 						</button>
 						<h3 class='btn-group col-lg-10 col-xl-10 col-md-10 col-sm-10 col-8 card-text align-text-bottom'
 							role='group'>".((array)$guest)['username']." "; if (((array)$guest)['sex'] == "Male"){ echo "♂"; } else { echo "♀"; }; 
