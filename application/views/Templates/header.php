@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 
 <body class="<?php if (isset($CardColor)) echo $CardColor; else echo "bg-secondary"; ?>" style="height:92vh">
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsiveToggler"
 			aria-controls="navbarResponsiveToggler" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
 					echo ucfirst($this->session->userdata('username'));
 					echo "</button>
-						<div class='dropdown-menu' aria-labelledby='dropdownMenuButton' style='right: 0; left: auto;'>
+						<div class='dropdown-menu col-lg-3 col-md-3 col-xl-3 col-12' aria-labelledby='dropdownMenuButton' style='right: 0; left: auto;'>
 							<a class='dropdown-item text-primary' href='".site_url()."account'>
 								<svg class='bi bi-person-fill' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
 									<path fill-rule='evenodd' d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 100-6 3 3 0 000 6z' clip-rule='evenodd'/>
@@ -72,6 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<path fill-rule='evenodd' d='M14 13.5a1.5 1.5 0 001.5-1.5V4A1.5 1.5 0 0014 2.5H7A1.5 1.5 0 005.5 4v1.5a.5.5 0 001 0V4a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H7a.5.5 0 01-.5-.5v-1.5a.5.5 0 00-1 0V12A1.5 1.5 0 007 13.5h7z' clip-rule='evenodd'/>
 							</svg> Disconnect</a>
 						</div></div>";
-					} ?>
+				}
+			?>
 		</div>
 	</nav>

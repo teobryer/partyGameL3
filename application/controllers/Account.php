@@ -103,10 +103,42 @@ class Account extends CI_Controller {
 
     public function register()
     {
-        $data['title'] = "Register";
-		$this->load->view('Templates/header', $data);
-		$this->load->view('register_page');
-		$this->load->view('Templates/footer');
+		$this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('email','Email address', 'required');
+        $this->form_validation->set_rules('password','Password', 'required');
+        if($this->form_validation->run() === FALSE)
+        {
+            $data['title'] = "Register";
+            $content = 'register_page';
+        } else {
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+            $password = hash('sha256',$password);
+            $test = $this->personne_model->verificationPersonneLogin($email, $password);
+            if ($test)
+            {
+                $this->session->set_userdata('email', $email);
+                $CurrentPersonne = $this->personne_model->getPersonne($email);
+                $data['title'] = "Account";
+                $data['guests'] = $CurrentPersonne->getjsonContent("guests");
+                //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
+                $data['nbGuests'] = count((array)$data['guests']);
+                $content = 'account_page';
+            } else {
+                $data['title'] = "Register";
+                $content = 'register_page';
+                echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
+                            <h3>Please verify your <strong>Email address</strong> ('".$email."') or your <strong>Password</strong>.</h3>
+                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                            </button>
+                        </div>";
+            }
+        }
+        $this->load->view('Templates/header', $data);
+		$this->load->view($content);
+        $this->load->view('Templates/footer');
     }
 
     public function inventory()
@@ -114,6 +146,7 @@ class Account extends CI_Controller {
         $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
         $inventory = $personne->getjsonContent("inventory");
         $inventory = (array)$inventory;
+        $data['title'] = "Inventory";
         $data['inventory'] = $inventory;
         $this->load->view('Templates/header', $data);
 		$this->load->view('inventory_page');
