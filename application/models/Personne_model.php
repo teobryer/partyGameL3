@@ -114,7 +114,12 @@ class Personne_Model extends CI_Model{
             $this->db->insert('PERSONNE', $dataPersonne);
             $this->session->set_userdata($personneTest);
     } 
-        
+    
+    public function getAllInventory()
+    {
+            $query = $this->db->get('INVENTORY');
+            return $query->result_array();
+    }  
 
 }
 
