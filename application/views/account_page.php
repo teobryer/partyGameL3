@@ -6,27 +6,29 @@
 			</div>
 			<div class="card-body container">
 				<!-- Input Personne -->
-				<h3 class="col-lg-12 col-xl-12 col-md-12" >Add/Remove Guest from your Account</h3>
-				<small class="col-lg-12 col-xl-12 col-md-12" ><span class="badge badge-secondary">You have <?php echo $nbGuests?> guests</span></small>
-				<?php echo validation_errors(); ?>
-				<?php echo form_open('account/addGuest') ?>
-				<div class="container row mx-auto mb-5">
-						<div class="btn-group col-lg-2 col-xl-2 col-md-2 ml-auto btn-group-toggle" data-toggle="buttons">
-							<label class="btn btn-secondary active">
-								<input type="radio" name="male" id="male" class="btn btn-secondary" checked>♂
-							</label>
-							<label class="btn btn-secondary">
-								<input type="radio" name="female" id="female" class="btn btn-secondary">♀
-							</label>
+				<h3 class="col-lg-12 col-xl-12 col-md-12">Add/Remove Guest from your Account</h3>
+				<small class="col-lg-12 col-xl-12 col-md-12"><span class="badge badge-secondary">You have
+					<?php echo $nbGuests?> guests</span></small>
+					<?php echo validation_errors(); ?>
+					<?php echo form_open('account/addGuest') ?>
+						<div class="container row mx-auto mb-5">
+							<div class="btn-group col-lg-2 col-xl-2 col-md-2 ml-auto btn-group-toggle" data-toggle="buttons">
+								<label class="btn btn-secondary active">
+									<input type="radio" name="male" id="male" class="btn btn-secondary" checked>♂
+								</label>
+								<label class="btn btn-secondary">
+									<input type="radio" name="female" id="female" class="btn btn-secondary">♀
+								</label>
+							</div>
+							<div class="btn-group col-lg-8 col-xl-8 col-md-8" role="group">
+								<input type="text" class="form-control" name="username" id="usernameInput"
+									placeholder="username" required>
+							</div>
+							<div class="btn-group col-lg-2 col-xl-2 col-md-2 mr-auto" role="group">
+								<button type="submit" class="btn btn-secondary">+</button>
+							</div>
 						</div>
-						<div class="btn-group col-lg-8 col-xl-8 col-md-8" role="group">
-							<input type="text" class="form-control" name="username" id="usernameInput" placeholder="username" required>
-						</div>
-						<div class="btn-group col-lg-2 col-xl-2 col-md-2 mr-auto" role="group">
-							<button type="submit" class="btn btn-secondary">+</button>
-						</div>	
-				</div>
-				</form>
+					</form>
 				<?php 
 				if (isset($guests)){
 					//<!-- Titles -->
@@ -54,7 +56,7 @@
 					};
 				}
 				?>
-				
+
 			</div>
 		</div>
 	</div>
