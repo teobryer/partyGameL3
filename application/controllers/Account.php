@@ -9,6 +9,8 @@ class Account extends CI_Controller {
         $this->load->model('personne_model');
         $this->load->helper('url');
         $this->load->library('session');
+        $this->load->helper('form');
+        $this->load->library('form_validation');
         $this->session->unset_userdata('instancePartie');
     }   
     
@@ -26,7 +28,21 @@ class Account extends CI_Controller {
         } else {
             header('Location: '.site_url().'account/login');
         }
-	}
+    }
+    
+    public function addGuest()
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('username','Username', 'required');
+        $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
+        if($this->form_validation->run() === TRUE)
+        {
+            $username = $this->input->post('username');
+            $male = $this->input->post('male');
+            $this->addGuestAtAPersonne($CurrentPersonne, $username, ["casserole" , "assiettes"], "True", "Female");
+        }
+    }
     
 
     private function addGuestAtAPersonne($personne, $guestUsername, $guestInventory, $guestAlcoholFriendly, $guestSex)

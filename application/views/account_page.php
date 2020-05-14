@@ -8,18 +8,25 @@
 				<!-- Input Personne -->
 				<h3 class="col-lg-12 col-xl-12 col-md-12" >Add/Remove Guest from your Account</h3>
 				<small class="col-lg-12 col-xl-12 col-md-12" ><span class="badge badge-secondary">You have <?php echo $nbGuests?> guests</span></small>
+				<?php echo validation_errors(); ?>
+				<?php echo form_open('account/addGuest') ?>
 				<div class="container row mx-auto mb-5">
-					<div class="btn-group col-lg-2 col-xl-2 col-md-2 ml-auto" role="group">
-						<button type="button" class="btn btn-secondary">♂</button>
-						<button type="button" class="btn btn-secondary">♀</button>
-					</div>
-					<div class="btn-group col-lg-8 col-xl-8 col-md-8" role="group">
-						<input type="text" class="form-control" id="usernameInput" placeholder="username">
-					</div>
-					<div class="btn-group col-lg-2 col-xl-2 col-md-2 mr-auto" role="group">
-						<button type="button" class="btn btn-secondary">+</button>
-					</div>
+						<div class="btn-group col-lg-2 col-xl-2 col-md-2 ml-auto btn-group-toggle" data-toggle="buttons">
+							<label class="btn btn-secondary active">
+								<input type="radio" name="male" id="male" class="btn btn-secondary" checked>♂
+							</label>
+							<label class="btn btn-secondary">
+								<input type="radio" name="female" id="female" class="btn btn-secondary">♀
+							</label>
+						</div>
+						<div class="btn-group col-lg-8 col-xl-8 col-md-8" role="group">
+							<input type="text" class="form-control" name="username" id="usernameInput" placeholder="username" required>
+						</div>
+						<div class="btn-group col-lg-2 col-xl-2 col-md-2 mr-auto" role="group">
+							<button type="submit" class="btn btn-secondary">+</button>
+						</div>	
 				</div>
+				</form>
 				<?php 
 				if (isset($guests)){
 					//<!-- Titles -->
@@ -35,7 +42,7 @@
 					<div class='btn-group col-lg-11 col-xl-11 col-md-11 col-sm-11 col-10 ml-auto' role='group'>
 						<button type='button' class='close col-lg-2 col-xl-2 col-md-2 col-sm-2 col-4'
 							aria-label='Close'>
-							<a class='text-danger' href='".site_url()."account/deleteGuestAtAPersonne/".$key."'><span aria-hidden='true'>&times;</span></a>
+							<a class='text-danger text-decoration-none' href='".site_url()."account/deleteGuestAtAPersonne/".$key."'><span aria-hidden='true'>&times;</span></a>
 						</button>
 						<h3 class='btn-group col-lg-10 col-xl-10 col-md-10 col-sm-10 col-8 card-text align-text-bottom'
 							role='group'>".((array)$guest)['username']." "; if (((array)$guest)['sex'] == "Male"){ echo "♂"; } else { echo "♀"; }; 
