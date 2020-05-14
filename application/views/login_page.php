@@ -9,11 +9,11 @@
 				<div class="container text-center">
 					<?php echo validation_errors(); ?>
 					<?php echo form_open('account/login') ?>
-					<div class="col-lg-12 col-xl-12 col-md-12 col-12 form-group">
+					<div class="col-lg-8 col-xl-10 col-md-12 col-12 mx-auto my-2 form-group">
 						<label class="sr-only" for="emailInput">Email address</label>
-						<span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-							title="Please fill this field with your email">
-							<div class="input-group mb-2">
+						<span class="d-inline-block mx-auto col-lg-12 col-xl-12 col-md-12 col-12" tabindex="0"
+							data-toggle="tooltip" title="Please fill this field with your email">
+							<div class="input-group">
 								<div class="input-group-prepend">
 									<div class="input-group-text">@</div>
 								</div>
@@ -22,10 +22,10 @@
 							</div>
 						</span>
 					</div>
-					<div class="col-lg-12 col-xl-12 col-md-12 col-12 form-group">
+					<div class="col-lg-8 col-xl-10 col-md-12 col-12 mx-auto my-2 form-group">
 						<label class="sr-only" for="password">Password</label>
-						<span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-							title="Please fill this field with your password">
+						<span class="d-inline-block mx-auto col-lg-12 col-xl-12 col-md-12 col-12" tabindex="0"
+							data-toggle="tooltip" title="Please fill this field with your password">
 							<div class="input-group mb-2">
 								<div class="input-group-prepend">
 									<div class="input-group-text"><svg class="bi bi-lock" width="1em" height="1em"
@@ -41,12 +41,11 @@
 							</div>
 						</span>
 					</div>
-
-					<div class="btn-group col-lg-4 col-xl-4 col-md-6 col-12 mb-5" role="group">
+					<div class="btn-group col-lg-4 col-xl-4 col-md-6 col-10 mb-4" role="group">
 						<input type="submit" class="btn btn-secondary" name="submit" value="Login" />
 					</div>
 					</form>
-					<div class="container col-lg-4 col-xl-4 col-md-6 col-12">
+					<div class="container col-lg-4 col-xl-4 col-md-6 col-10">
 						<h5 class ="">You must log in if you want to take advantage of the game settings</h5>
 					</div>
 				</div>
