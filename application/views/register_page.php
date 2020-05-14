@@ -96,7 +96,7 @@
 			<div class="card-footer">
 				<div class="text-center">
 					<a href="<?php site_url() ?>login"><button type="button"
-							class="btn btn-secondary col-lg-4 col-xl-4 col-md-6 col-10">Déjà inscrit ?</button></a>
+							class="btn btn-secondary col-lg-4 col-xl-4 col-md-6 col-10">Already registered ?</button></a>
 				</div>
 			</div>
 		</div>
