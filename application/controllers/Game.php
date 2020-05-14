@@ -56,9 +56,10 @@ class Game extends CI_Controller {
     public function drawPledge(){
         
         $this->personnConcerned =  array();
-        $this->actual_Forfeit = $this->game_model->getForfeitById( rand ( 1 ,  $this->game_model->comptTotalForfeit() ) );
-        
-   
+      //  $this->actual_Forfeit = $this->game_model->getForfeitById( rand ( 1 ,  $this->game_model->comptTotalForfeit() ) );
+      // $this->actual_Forfeit = $this->game_model->getForfeitByExcludingTags(array("relou"));
+      //  $this->actual_Forfeit = $this->game_model->getForfeitByIncludingInventory(array("table"));
+        $this->actual_Forfeit = $this->game_model-> getForfeitByIncludingAllTagsOnly(array("hot","action","social"));
        
         if($this->actual_Forfeit->getNbConcerned()== -1) {
             
@@ -138,9 +139,9 @@ class Game extends CI_Controller {
 	{
         //$this->drawPledge();
 	   // print_r($this->tab_Forfeit);
-	   // $this->game_model->setSexualOrientationDefault('homo');
+	   // $this->game_model->getForfeitByTags(array("relou", "sport"));
 	
-	    
+	   // print_r($this->game_model->ReverseListTag(array("hot", "action")));
 	    
         $data['title'] = "Game";
         $data['gage'] = $this->drawPledge();
