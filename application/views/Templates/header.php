@@ -72,7 +72,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<path fill-rule='evenodd' d='M14 13.5a1.5 1.5 0 001.5-1.5V4A1.5 1.5 0 0014 2.5H7A1.5 1.5 0 005.5 4v1.5a.5.5 0 001 0V4a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H7a.5.5 0 01-.5-.5v-1.5a.5.5 0 00-1 0V12A1.5 1.5 0 007 13.5h7z' clip-rule='evenodd'/>
 							</svg> Disconnect</a>
 						</div></div>";
-				}
+				} else echo "<a href='".site_url()."account/login'><button class='btn btn-primary' type='button'>Login
+							</button></a>";
 			?>
 		</div>
 	</nav>
