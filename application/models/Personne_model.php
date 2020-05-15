@@ -152,6 +152,26 @@ class Personne_Model extends CI_Model{
             $this->db->insert('PERSONNE', $dataPersonne);
             $this->session->set_userdata($personneTest);
     } 
+
+    public function testOldPassword($oldpasswordHashed)
+    {
+        $this->db->where('email = "'.$this->session->userdata('email').'" and password = "'.$oldpasswordHashed.'"');
+        $this->db->from('PERSONNE');
+        $query = $this->db->get();
+        return count($query->result_array());
+    }
+
+    public function changePasswordPersonne($oldpasswordHashed,$newpasswordHashed)
+    {
+        if ($this->session->has_userdata('email')){
+            $this->db->where('email = "'.$this->session->userdata('email').'" and password = "'.$oldpasswordHashed.'"');
+            $this->db->from('PERSONNE');
+            $data = [
+                'password' => $newpasswordHashed,
+            ];
+            $this->db->update('PERSONNE', $data);
+        }
+    }
     
     public function getAllInventory()
     {

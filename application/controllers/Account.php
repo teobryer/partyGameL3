@@ -155,6 +155,62 @@ class Account extends CI_Controller {
         $this->load->view('Templates/footer');
     }
 
+    public function changePassword()
+    {
+		$this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('Oldpassword','Old password', 'required');
+        $this->form_validation->set_rules('Newpassword','New password', 'required');
+        if($this->form_validation->run() === FALSE)
+        {
+            $data['title'] = "Change Password";
+            $content = 'change_password_page';
+        } else {
+            $newpassword = $this->input->post('Newpassword');
+            $oldpassword = $this->input->post('Oldpassword');
+            $newpasswordHashed = hash('sha256',$newpassword);
+            $oldpasswordHashed = hash('sha256',$oldpassword);
+            $test = $this->personne_model->testOldPassword($oldpasswordHashed);
+            if ($test){
+                if ($newpasswordHashed == $oldpasswordHashed){
+                    $data['title'] = "Change Password";
+                    $content = 'change_password_page';
+                    echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
+                    <h3>Your <strong>New Password</strong> and your <strong>Old Password</strong> are the same</h3>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                    </div>";
+                } else {
+                    $this->personne_model->changePasswordPersonne($oldpasswordHashed,$newpasswordHashed);
+                    $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
+                    $data['title'] = "Account";
+                    $data['guests'] = $CurrentPersonne->getjsonContent("guests");
+                    $data['nbGuests'] = count((array)$data['guests']);
+                    $content = 'account_page';
+                    echo "<div class='alert alert-success alert-dismissible fade show fixed-bottom text-center' role='alert'>
+                        <h3>Your <strong>Password</strong> has been successfully changed</h3>
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                        </button>
+                         </div>";
+                }
+            } else {
+                $data['title'] = "Change Password";
+                $content = 'change_password_page';
+                echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
+                <h3>Wrong <strong>Old Password</strong> please retry</h3>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+                </button>
+                </div>";
+            }
+        }
+        $this->load->view('Templates/header', $data);
+		$this->load->view($content);
+        $this->load->view('Templates/footer');
+    }
+
     public function inventory()
     {
         $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
