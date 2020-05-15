@@ -123,7 +123,7 @@ class Personne_Model extends CI_Model{
                 'username'          => $username,
                 'email'             => $email,
                 'passwordHashed'    => $passwordHashed,
-                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\"}",
+                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\", \"yearsOld\" : \"18\"}",
                 'logged_in'         => TRUE
                 );
             $this->db->insert('PERSONNE', $dataPersonne);
@@ -136,15 +136,20 @@ class Personne_Model extends CI_Model{
             return $query->result_array();
     }  
 
-    public function getPlayers($email){
-        $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
-        $guests = $personne->getGuests();
-        $AllPersonne[] = $personne;
-        foreach ($guests as $key => $guest) {
-            $personneGuest = new Personne(((array)$guest)['username'], null, null, ((array)$guest)['alcoholFriendly'], "null" , ((array)$guest)['sex'], null);
-            $AllPersonne[] = $personne;
+    public function getPlayers(){
+        if ($this->session->has_userdata('email')){
+            $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+            $guests = $personne->getGuests();
+            $allPersonne[] = $personne;
+            foreach ($guests as $key => $guest) {
+                $personneGuest = new Personne(((array)$guest)['username'], null, null, ((array)$guest)['alcoholFriendly'], "null" , ((array)$guest)['sex'], null);
+                $allPersonne[] = $personne;
+            }
+            return $allPersonne;
+        } else {
+            return null;
         }
-        return $AllPersonne;
+        
     }
 
 }

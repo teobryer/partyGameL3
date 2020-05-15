@@ -60,7 +60,7 @@ class Parameters extends CI_Controller {
         $Alljson = $personne->getjsonContent();
         $guests = (array)$guests;
         $guestInventory = "\"".implode('","',$guestInventory)."\"";
-        $guests[] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'" }');
+        $guests[] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'", "yearsOld" : "18"}');
         $guests = json_decode(json_encode($guests, JSON_FORCE_OBJECT));
         $Alljson = (array)$Alljson;
         $Alljson['guests'] = $guests;
