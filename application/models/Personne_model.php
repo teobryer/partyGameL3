@@ -6,10 +6,13 @@ class Personne {
     private $passwordHashed;
     private $alcoholFriendly;
     private $sex;
+    private $yearsOld;
+    private $inventory;
+    private $inventoryExclude;
     private $tagsExclude;
     private $jsonContent;
     
-    function __construct($username, $email=null, $passwordHashed=null, $alcoholFriendly, $tagsExclude=null , $sex, $jsonContent=null)
+    function __construct($username, $email=null, $passwordHashed=null, $alcoholFriendly, $tagsExclude=null , $sex, $yearsOld, $inventory, $inventoryExclude, $jsonContent=null)
     {
         $this->username = $username;
         $this->email = $email;
@@ -17,6 +20,9 @@ class Personne {
         $this->alcoholFriendly = $alcoholFriendly;
         $this->tagsExclude = $tagsExclude;
         $this->sex = $sex;
+        $this->yearsOld = $yearsOld;
+        $this->inventory = $inventory;
+        $this->inventoryExclude = $inventoryExclude;
         $this->jsonContent = $jsonContent;
     }
     
@@ -62,6 +68,14 @@ class Personne {
         }
     }
 
+    public function getInventoryExclude(){
+        return $this->inventoryExclude;
+    }
+
+    public function getYearsOld(){
+        return $this->yearsOld;
+    }
+
     public function setjsonContent($jsonContent){
         $this->jsonContent = $jsonContent;
     }
@@ -98,7 +112,7 @@ class Personne_Model extends CI_Model{
 			'logged_in'         => TRUE
 		    );
             $this->session->set_userdata($personneTest);
-            return new Personne($personne['username'], $personne['email'], $personne['password'], "True", "null" , "Male", $personne['jsonContent']);
+            return new Personne($personne['username'], $personne['email'], $personne['password'], "True", "null" , "Male", "18", "inventory", "inventoryExclude", $personne['jsonContent']);
     }  
     
     public function setjsonContentPersonne($email, $jsonContent)
@@ -117,13 +131,13 @@ class Personne_Model extends CI_Model{
                 'username'          => $username,
                 'email'             => $email,
                 'password'          => $passwordHashed,
-                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\"}"
+                'jsonContent'       => "{\"inventory\":{},\"inventoryExclude\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\", \"yearsOld\" : \"18\"}"
             );
             $personneTest = array(
                 'username'          => $username,
                 'email'             => $email,
                 'passwordHashed'    => $passwordHashed,
-                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\", \"yearsOld\" : \"18\"}",
+                'jsonContent'       => "{\"inventory\":{},\"inventoryExclude\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\", \"yearsOld\" : \"18\"}",
                 'logged_in'         => TRUE
                 );
             $this->db->insert('PERSONNE', $dataPersonne);
@@ -142,7 +156,7 @@ class Personne_Model extends CI_Model{
             $guests = $personne->getGuests();
             $allPersonne[] = $personne;
             foreach ($guests as $key => $guest) {
-                $personneGuest = new Personne(((array)$guest)['username'], null, null, ((array)$guest)['alcoholFriendly'], "null" , ((array)$guest)['sex'], null);
+                $personneGuest = new Personne(((array)$guest)['username'], null, null, ((array)$guest)['alcoholFriendly'], ((array)$guest)['tagsExclude'] , ((array)$guest)['sex'], ((array)$guest)['yearsOld'], ((array)$guest)['inventory'], ((array)$guest)['inventoryExclude'], null);
                 $allPersonne[] = $personne;
             }
             return $allPersonne;
