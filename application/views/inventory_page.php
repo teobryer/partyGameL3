@@ -29,7 +29,7 @@
 					foreach ($inventoryExclude as $key => $item) {
 						echo "<h2 class='mr-2'><span class='badge badge-secondary'><span class='badge badge-danger'>&times;</span> ".ucfirst($item['textItem'])." <span class='badge badge-success'>+</span></span></h2>";
 					};
-					print_r($allplayers);
+					//print_r($allplayers);
 				?>
 			</div>
 			

@@ -65,6 +65,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<path fill-rule='evenodd' d='M3.81 4.063A1.5 1.5 0 014.98 3.5h6.04a1.5 1.5 0 011.17.563l3.7 4.625a.5.5 0 01-.78.624l-3.7-4.624a.5.5 0 00-.39-.188H4.98a.5.5 0 00-.39.188L.89 9.312a.5.5 0 11-.78-.624l3.7-4.625z' clip-rule='evenodd'/>
 								<path fill-rule='evenodd' d='M.125 8.67A.5.5 0 01.5 8.5h5A.5.5 0 016 9c0 .828.625 2 2 2s2-1.172 2-2a.5.5 0 01.5-.5h5a.5.5 0 01.496.562l-.39 3.124a1.5 1.5 0 01-1.489 1.314H1.883a1.5 1.5 0 01-1.489-1.314l-.39-3.124a.5.5 0 01.121-.393z' clip-rule='evenodd'/>
 							</svg> Inventory</a>
+							<a class='dropdown-item text-primary' href='".site_url()."account/tag'>
+							<svg class='bi bi-tag-fill' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+								<path fill-rule='evenodd' d='M2 1a1 1 0 00-1 1v4.586a1 1 0 00.293.707l7 7a1 1 0 001.414 0l4.586-4.586a1 1 0 000-1.414l-7-7A1 1 0 006.586 1H2zm4 3.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z' clip-rule='evenodd'/>
+							</svg> Tags</a>
 							<a class='dropdown-item text-primary' href='".site_url()."account/disconnect'>
 							<svg class='bi bi-box-arrow-left' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
 								<path fill-rule='evenodd' d='M4.354 11.354a.5.5 0 000-.708L1.707 8l2.647-2.646a.5.5 0 10-.708-.708l-3 3a.5.5 0 000 .708l3 3a.5.5 0 00.708 0z' clip-rule='evenodd'/>

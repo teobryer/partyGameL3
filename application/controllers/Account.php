@@ -171,15 +171,16 @@ class Account extends CI_Controller {
 
     public function tag()
     {
-        /*$personne = $this->personne_model->getPersonne($this->session->userdata('email'));
-        $inventory = $personne->getjsonContent("tag");
-        $inventory = (array)$inventory;
-        $data['title'] = "Inventory";
-        $data['inventory'] = $inventory;
-        $data['inventoryExclude'] = $this->personne_model->getAllInventory();
+        $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+        $tagsExclude = $personne->getjsonContent("tagsExclude");
+        $tagsExclude = (array)$tagsExclude;
+        $data['title'] = "Tags";
+        print_r($tagsExclude);
+        $data['inventory'] = $tagsExclude;
+        $data['allTags'] = $this->personne_model->getAllTags();
         $this->load->view('Templates/header', $data);
 		$this->load->view('tag_page');
-        $this->load->view('Templates/footer');*/
+        $this->load->view('Templates/footer');
     }
     
 

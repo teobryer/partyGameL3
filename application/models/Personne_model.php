@@ -148,6 +148,12 @@ class Personne_Model extends CI_Model{
     {
             $query = $this->db->get('INVENTORY');
             return $query->result_array();
+    }
+
+    public function getAllTags()
+    {
+            $query = $this->db->get('TAG');
+            return $query->result_array();
     }  
 
     public function getPlayers(){
