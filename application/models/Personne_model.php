@@ -4,13 +4,19 @@ class Personne {
     private $username;
     private $email;
     private $passwordHashed;
+    private $alcoholFriendly;
+    private $sex;
+    private $tagsExclude;
     private $jsonContent;
     
-    function __construct($username, $email="null", $passwordHashed="null", $jsonContent=null)
+    function __construct($username, $email=null, $passwordHashed=null, $alcoholFriendly, $tagsExclude=null , $sex, $jsonContent=null)
     {
         $this->username = $username;
         $this->email = $email;
         $this->passwordHashed = $passwordHashed;
+        $this->alcoholFriendly = $alcoholFriendly;
+        $this->tagsExclude = $tagsExclude;
+        $this->sex = $sex;
         $this->jsonContent = $jsonContent;
     }
     
@@ -44,6 +50,15 @@ class Personne {
             return $obj;
         } else {
             return $obj->$champs;
+        }
+    }
+
+    public function getGuests()
+    {
+        if ($this->jsonContent !== null){
+            return (array) $this->getjsonContent("guests");
+        } else {
+            return array();
         }
     }
 
@@ -83,7 +98,7 @@ class Personne_Model extends CI_Model{
 			'logged_in'         => TRUE
 		    );
             $this->session->set_userdata($personneTest);
-            return new Personne($personne['username'], $personne['email'], $personne['password'], $personne['jsonContent']);
+            return new Personne($personne['username'], $personne['email'], $personne['password'], "True", "null" , "Male", $personne['jsonContent']);
     }  
     
     public function setjsonContentPersonne($email, $jsonContent)
@@ -102,13 +117,13 @@ class Personne_Model extends CI_Model{
                 'username'          => $username,
                 'email'             => $email,
                 'password'          => $passwordHashed,
-                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\"}"
+                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\"}"
             );
             $personneTest = array(
                 'username'          => $username,
                 'email'             => $email,
                 'passwordHashed'    => $passwordHashed,
-                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\"}",
+                'jsonContent'       => "{\"inventory\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\"}",
                 'logged_in'         => TRUE
                 );
             $this->db->insert('PERSONNE', $dataPersonne);
@@ -120,6 +135,17 @@ class Personne_Model extends CI_Model{
             $query = $this->db->get('INVENTORY');
             return $query->result_array();
     }  
+
+    public function getPlayers($email){
+        $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+        $guests = $personne->getGuests();
+        $AllPersonne[] = $personne;
+        foreach ($guests as $key => $guest) {
+            $personneGuest = new Personne(((array)$guest)['username'], null, null, ((array)$guest)['alcoholFriendly'], "null" , ((array)$guest)['sex'], null);
+            $AllPersonne[] = $personne;
+        }
+        return $AllPersonne;
+    }
 
 }
 
