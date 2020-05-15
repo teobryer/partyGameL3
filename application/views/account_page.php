@@ -44,7 +44,7 @@
 					<div class='col-lg-10 col-xl-10 col-md-10 col-sm-10 col-8'>
 						<!-- Empty Layout Div -->
 					</div>
-					<p class='col-lg-2 col-xl-2 col-md-2 col-sm-2 col-4'>Alcool</p>
+					<p class='col-lg-2 col-xl-2 col-md-2 col-sm-2 col-4'>Alcohol</p>
 					</div>";
 					//<!-- Personnes -->
 					foreach ($guests as $key => $guest) {
