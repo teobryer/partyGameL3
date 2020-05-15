@@ -62,7 +62,7 @@ class Account extends CI_Controller {
         $Alljson = $personne->getjsonContent();
         $guests = (array)$guests;
         $guestInventory = "\"".implode('","',$guestInventory)."\"";
-        $guests[] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "tagsExclude":[], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'" }');
+        $guests[] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "inventoryExclude":[], "tagsExclude":[], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'", "yearsOld" : "18" }');
         $guests = json_decode(json_encode($guests, JSON_FORCE_OBJECT));
         $Alljson = (array)$Alljson;
         $Alljson['guests'] = $guests;
@@ -172,11 +172,12 @@ class Account extends CI_Controller {
     public function tag()
     {
         $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
-        $inventory = $personne->getjsonContent("tag");
-        $inventory = (array)$inventory;
-        $data['title'] = "Inventory";
-        $data['inventory'] = $inventory;
-        $data['inventoryExclude'] = $this->personne_model->getAllInventory();
+        $tagsExclude = $personne->getjsonContent("tagsExclude");
+        $tagsExclude = (array)$tagsExclude;
+        $data['title'] = "Tags";
+        print_r($tagsExclude);
+        $data['inventory'] = $tagsExclude;
+        $data['allTags'] = $this->personne_model->getAllTags();
         $this->load->view('Templates/header', $data);
 		$this->load->view('tag_page');
         $this->load->view('Templates/footer');

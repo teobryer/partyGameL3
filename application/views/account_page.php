@@ -56,7 +56,7 @@
 						</button>
 						<h3 class='btn-group col-lg-10 col-xl-10 col-md-10 col-sm-10 col-8 card-text align-text-bottom'
 							role='group'>".((array)$guest)['username']." "; if (((array)$guest)['sex'] == "Male"){ echo "♂"; } else { echo "♀"; }; 
-						echo "</h3>
+						echo " ".((array)$guest)['yearsOld']." years old</h3>
 					</div>
 					<div class='btn-group col-lg-1 col-xl-1 col-md-1 col-sm-1 col-2 mr-auto' role='group'>
 						<input class='form-check-input' type='checkbox' value='' id='AlcoolCheckbox' disabled "; if (((array)$guest)['alcoholFriendly'] == "True"){ echo "checked"; }; echo ">
