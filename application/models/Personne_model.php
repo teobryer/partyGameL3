@@ -68,6 +68,15 @@ class Personne {
         }
     }
 
+    public function getsex()
+    {
+        return $this->sex;
+    }
+
+    public function getInventory(){
+        return $this->inventory;
+    }
+
     public function getInventoryExclude(){
         return $this->inventoryExclude;
     }
