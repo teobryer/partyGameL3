@@ -20,11 +20,28 @@
 							<input type="radio" name="female" id="female" class="btn btn-secondary">♀
 						</label>
 					</div>
-					<div class="btn-group col-lg-6 col-xl-6 col-md-6 mx-auto" role="group">
-						<input type="text" class="form-control" name="username" id="usernameInput"
-							placeholder="username" required>
+					
+					<div class="col-lg-6 col-xl-6 col-md-6 col-9 mx-auto my-2 form-group">
+						<label class="sr-only" for="username">Username</label>
+						<span class="d-inline-block mx-auto col-lg-12 col-xl-12 col-md-12 col-12" tabindex="0"
+							data-toggle="tooltip" title="Please fill this field with your username">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<svg class="bi bi-person" width="1em" height="1em" viewBox="0 0 16 16"
+											fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd"
+												d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 00.014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 00.022.004zm9.974.056v-.002.002zM8 7a2 2 0 100-4 2 2 0 000 4zm3-2a3 3 0 11-6 0 3 3 0 016 0z"
+												clip-rule="evenodd" />
+										</svg>
+									</div>
+								</div>
+								<input type="input" name="username" class="form-control" id="username"
+									placeholder="username" required>
+							</div>
+						</span>
 					</div>
-					<div class="col-auto">
+					<div class="col-lg-2 col-xl-2 col-md-2 col-3">
 						<div class="form-check mb-2 mx-auto">
 							<input class="form-check-input" type="checkbox" id="alcohol" name="alcohol">
 							<label class="form-check-label" for="autoSizingCheck">
