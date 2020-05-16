@@ -219,7 +219,6 @@ class Account extends CI_Controller {
         $data['title'] = "Inventory";
         $data['inventory'] = $inventory;
         $data['inventoryExclude'] = $this->personne_model->getAllInventory();
-        $data['allplayers'] = $this->personne_model->getPlayers();
         $this->load->view('Templates/header', $data);
 		$this->load->view('inventory_page');
         $this->load->view('Templates/footer');
