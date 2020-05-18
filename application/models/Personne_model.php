@@ -12,7 +12,7 @@ class Personne {
     private $tagsExclude;
     private $jsonContent;
     
-    function __construct($username, $email=null, $passwordHashed=null, $alcoholFriendly, $tagsExclude=null , $sex, $yearsOld, $inventory, $inventoryExclude, $jsonContent=null)
+    function __construct($username, $email=null, $passwordHashed=null, $alcoholFriendly, $tagsExclude=null , $sex, $yearsOld, $inventory=null, $inventoryExclude=null, $jsonContent=null)
     {
         $this->username = $username;
         $this->email = $email;
@@ -73,6 +73,16 @@ class Personne {
         return $this->sex;
     }
 
+    public function getTagsExclude()
+    {
+        return $this->tagsExclude;
+    }
+
+    public function setTagsExclude($tagsExclude)
+    {
+        return $this->tagsExclude = $tagsExclude;
+    }
+
     public function getInventory(){
         return $this->inventory;
     }
@@ -121,7 +131,7 @@ class Personne_Model extends CI_Model{
 			'logged_in'         => TRUE
 		    );
             $this->session->set_userdata($personneTest);
-            return new Personne($personne['username'], $personne['email'], $personne['password'], "True", "null" , "Male", "18", "inventory", "inventoryExclude", $personne['jsonContent']);
+            return new Personne($personne['username'], $personne['email'], $personne['password'], "True", null , "Male", "18", null, null, $personne['jsonContent']);
     }  
     
     public function setjsonContentPersonne($email, $jsonContent)
