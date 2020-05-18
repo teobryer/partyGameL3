@@ -60,7 +60,7 @@ function hideTagToExclude(tagnumber, tagtext) {
 	let textnode = document.createTextNode(" "+tagtext);   
 	spanDelete.appendChild(deleteCross);
 	container.appendChild(spanDelete);
-	tagnumber[0] = 'U';
+	//tagnumber[0] = 'U';
 	spanDelete.onclick = function() { hideTagToUnknown(tagnumber, tagtext); };
 	container.appendChild(textnode);
 	node.appendChild(container);
@@ -85,15 +85,18 @@ function hideTagToUnknown(tagnumber, tagtext) {
 	spanAdd.appendChild(deleteCross);
 	container.appendChild(textnode);
 	container.appendChild(spanAdd);
-	tagnumber[0] = 'E';
+	//tagnumber[0] = 'E';
 	spanAdd.onclick = function() { hideTagToExclude(tagnumber, tagtext); };
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagUnknown").appendChild(node);
+
 }
 
 function saveTags() {
   	document.getElementById("saveBtn").disabled = true;
+	console.log(allTagsJS);
+	//$.post('file.php', {variable: allTagsJS});
 }
 
 </script>
