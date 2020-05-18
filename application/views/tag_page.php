@@ -10,7 +10,7 @@
 				<?php 
 				if (!empty($allTags)){
 					foreach ($allTags as $key => $item) {
-						echo "<h2 class='mr-2' id='Etag".$key."'><span class='badge badge-danger'><span class='badge badge-warning' onclick='hideTagToUnknown(\"Etag".$key."\", \"".ucfirst($item['textTag'])."\");'>&times;</span> ".ucfirst($item['textTag'])."</span></span></h2>";
+						echo "<h2 class='mr-2' id='Etag".$key."'><span class='badge badge-danger'><span class='badge badge-warning text-white' onclick='hideTagToUnknown(\"Etag".$key."\", \"".ucfirst($item['textTag'])."\");'>&times;</span> ".ucfirst($item['textTag'])."</span></span></h2>";
 					};
 				}
 				?>
@@ -45,7 +45,7 @@ function hideTagToExclude(tagnumber, tagtext) {
 	spanDelete.classList.add("badge");
 	spanDelete.classList.add("badge-warning");
 	spanDelete.classList.add("text-white");
-	let deleteCross = document.createTextNode('X');
+	let deleteCross = document.createTextNode("×");
 	let textnode = document.createTextNode(" "+tagtext);   
 	spanDelete.appendChild(deleteCross);
 	container.appendChild(spanDelete);
