@@ -293,7 +293,7 @@ class Game_Model extends CI_Model
     public function ExclusionInventory($inventory)
     {
         $whereCondition = '';
-        print_r($inventory);
+       // print_r($inventory);
         if($inventory != null && !empty($inventory)){
         foreach ($inventory as $oneItem) {
             $whereCondition = $whereCondition . ' not JSON_CONTAINS(jsonContent,' . "'" . '["' . $oneItem . '"]' . "'" . ' , ' . "'$.inventory'" . ') AND';

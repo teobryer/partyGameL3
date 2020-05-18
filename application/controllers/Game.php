@@ -109,7 +109,7 @@ class Game extends CI_Controller
         // print_r($rand);
         $personn = $this->tab_Personn[$rand];
         
-        print_r($personn);
+       // print_r($personn);
 
         if (! in_array($personn, $this->personnConcerned)) {
             $this->personnConcerned[] = $personn;
