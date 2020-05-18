@@ -191,8 +191,8 @@ class Personne_Model extends CI_Model{
             $guests = $personne->getGuests();
             $allPersonne[] = $personne;
             foreach ($guests as $key => $guest) {
-                $personneGuest = new Personne(((array)$guest)['username'], null, null, ((array)$guest)['alcoholFriendly'], ((array)$guest)['tagsExclude'] , ((array)$guest)['sex'], ((array)$guest)['yearsOld'], ((array)$guest)['inventory'], ((array)$guest)['inventoryExclude'], null);
-                $allPersonne[] = $personne;
+                $allPersonne[] = new Personne(((array)$guest)['username'], null, null, ((array)$guest)['alcoholFriendly'], ((array)$guest)['tagsExclude'] , ((array)$guest)['sex'], ((array)$guest)['yearsOld'], ((array)$guest)['inventory'], ((array)$guest)['inventoryExclude'], null);
+                
             }
             return $allPersonne;
         } else {
