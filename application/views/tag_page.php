@@ -8,9 +8,9 @@
 			<div class="card-body container row mx-auto overflow-auto" id="divTagExclude">
 				<!-- Items -->
 				<?php 
-				if (!empty($tagsExclude)){
-					foreach ($tagsExclude as $key => $item) {
-						echo "<h2 class='mr-2'><span class='badge badge-danger'><span class='badge badge-danger'>&times;</span> ".ucfirst($item)."</span></span></h2>";
+				if (!empty($allTags)){
+					foreach ($allTags as $key => $item) {
+						echo "<h2 class='mr-2' id='Etag".$key."'><span class='badge badge-danger'><span class='badge badge-warning' onclick='hideTagToUnknown(\"Etag".$key."\", \"".ucfirst($item['textTag'])."\");'>&times;</span> ".ucfirst($item['textTag'])."</span></span></h2>";
 					};
 				}
 				?>
@@ -20,7 +20,7 @@
 				<!-- Items -->
 				<?php 
 					foreach ($allTags as $key => $item) {
-						echo "<h2 class='mr-2' id='tag".$key."'><span class='badge badge-secondary'> ".ucfirst($item['textTag'])." <span class='badge badge-success' onclick='hideTagToExclude(\"tag".$key."\", \"".ucfirst($item['textTag'])."\");'>+</span></span></h2>";
+						echo "<h2 class='mr-2' id='Utag".$key."'><span class='badge badge-secondary'> ".ucfirst($item['textTag'])." <span class='badge badge-success' onclick='hideTagToExclude(\"Utag".$key."\", \"".ucfirst($item['textTag'])."\");'>+</span></span></h2>";
 					};
 				?>
 			</div>
@@ -31,6 +31,9 @@
 </div>
 
 <script>
+let variableRecuperee = <?php echo json_encode($allTags); ?>;
+
+
 function hideTagToExclude(tagnumber, tagtext) {
   	document.getElementById(tagnumber).remove();
   	let node = document.createElement("h2");
@@ -46,6 +49,7 @@ function hideTagToExclude(tagnumber, tagtext) {
 	let textnode = document.createTextNode(" "+tagtext);   
 	spanDelete.appendChild(deleteCross);
 	container.appendChild(spanDelete);
+	tagnumber[0] = 'U';
 	spanDelete.onclick = function() { hideTagToUnknown(tagnumber, tagtext); };
 	container.appendChild(textnode);
 	node.appendChild(container);
@@ -69,6 +73,7 @@ function hideTagToUnknown(tagnumber, tagtext) {
 	spanAdd.appendChild(deleteCross);
 	container.appendChild(textnode);
 	container.appendChild(spanAdd);
+	tagnumber[0] = 'E';
 	spanAdd.onclick = function() { hideTagToExclude(tagnumber, tagtext); };
 	node.appendChild(container);
 	node.id = tagnumber;
