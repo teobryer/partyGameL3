@@ -278,8 +278,12 @@ class Game_Model extends CI_Model
     public function ExclusionTags($tagList)
     {
         $whereCondition = '';
+        
+        
+        if( $tagList != null && !empty($tagList)){
         foreach ($tagList as $oneTag) {
             $whereCondition = $whereCondition . ' not JSON_CONTAINS(jsonContent,' . "'" . '["' . $oneTag . '"]' . "'" . ' , ' . "'$.tagList'" . ') AND';
+        }
         }
         $whereCondition = substr($whereCondition, 0, - 3);
 
@@ -289,11 +293,13 @@ class Game_Model extends CI_Model
     public function ExclusionInventory($inventory)
     {
         $whereCondition = '';
+        print_r($inventory);
+        if($inventory != null && !empty($inventory)){
         foreach ($inventory as $oneItem) {
             $whereCondition = $whereCondition . ' not JSON_CONTAINS(jsonContent,' . "'" . '["' . $oneItem . '"]' . "'" . ' , ' . "'$.inventory'" . ') AND';
         }
         $whereCondition = substr($whereCondition, 0, - 3);
-
+        }
         return $whereCondition;
     }
 
@@ -308,11 +314,24 @@ class Game_Model extends CI_Model
         return $arrayString;
     }
 
-    public function getForfeitAdvanded($nbConcernedMax, $tagListExlude, $inventoryExclude)
+    public function getForfeitAdvanded($nbConcernedMax, $tagListExclude, $inventoryExclude)
     {
         $this->db->select('*');
         $this->db->from('FORFEIT');
-        $this->db->where($this->ExclusionInventory($inventoryExclude) . " AND " . $this->ExclusionTags($tagListExlude) . " AND nbConcerned <=" . $nbConcernedMax);
+        if($tagListExclude == null || empty((array) $tagListExclude)){
+            $andTags = ' ';
+        }
+        else {
+            $andTags = ' AND ';
+        }
+        
+        if($inventoryExclude ==  null || empty((array) $inventoryExclude) ){
+            $andInventory = ' ';
+        }
+        else {
+            $andInventory = ' AND ';
+        }
+        $this->db->where($this->ExclusionInventory($inventoryExclude) . $andInventory . $this->ExclusionTags($tagListExclude) . $andTags ."nbConcerned <=" . $nbConcernedMax);
         $this->db->order_by('rand()');
         $this->db->limit(1);
         $query = $this->db->get();

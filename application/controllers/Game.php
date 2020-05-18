@@ -41,17 +41,7 @@ class Game extends CI_Controller
 //             );
             
             
-            $this->tab_Personn = array(
-               new  Personne("Tom", null, null, null),
-               new  Personne("Elsa", null, null, null),
-               new  Personne("Luc", null, null, null),
-               new  Personne("Mathieu", null, null, null),
-               new  Personne("Lea", null, null, null),
-               new  Personne("Lisa", null, null, null),
-               new  Personne("Dylan", null, null, null),
-               new  Personne("Martin", null, null, null),
-               new  Personne("Elodie", null, null, null)
-            );
+            $this->tab_Personn = $this->personne_model->getPlayers();
             // $this->tab_Personn = array ();
             $this->tab_BgColor = array(
                 "text-white bg-primary",
@@ -79,18 +69,13 @@ class Game extends CI_Controller
     public function drawPledge()
     {
         $this->personnConcerned = array();
+        $this->drawPersonne();
         // $this->actual_Forfeit = $this->game_model->getForfeitById( rand ( 1 , $this->game_model->comptTotalForfeit() ) );
         // $this->actual_Forfeit = $this->game_model->getForfeitByExcludingTags(array("relou"));
         // $this->actual_Forfeit = $this->game_model->getForfeitByIncludingInventory(array("table"));
         // $this->actual_Forfeit = $this->game_model-> getForfeitByIncludingAllTagsOnly(array("hot","action","social"));
 
-        $this->actual_Forfeit = $this->game_model->getForfeitAdvanded(2, array(
-            "relou",
-            "defi"
-        ), array(
-            "table",
-            "chausette"
-        ));
+        $this->actual_Forfeit = $this->game_model->getForfeitAdvanded(count($this->tab_Personn), $this->personnConcerned[0]->getTagsExclude(), $this->personnConcerned[0]->getInventoryExclude());
 
         if ($this->actual_Forfeit->getNbConcerned() == - 1) {
 
@@ -102,19 +87,19 @@ class Game extends CI_Controller
                 "%2",
                 "%3"
             );
-            $personns = array();
-            $i = $this->actual_Forfeit->getNbConcerned();
+          
+            $i = $this->actual_Forfeit->getNbConcerned()-1;
 
             while ($i != 0) {
 
-                $personns[] = $this->drawPersonne();
+                $this->drawPersonne();
 
                 $i --;
             }
 
             // print_r($personns);
 
-            return str_replace($parameters, $personns, $this->actual_Forfeit->getTextForfeit());
+            return str_replace($parameters, $this->personnInArrayString(), $this->actual_Forfeit->getTextForfeit());
         }
     }
 
@@ -122,7 +107,7 @@ class Game extends CI_Controller
     {
         $rand = array_rand($this->tab_Personn);
         // print_r($rand);
-        $personn = $this->tab_Personn[$rand]->getUsername();
+        $personn = $this->tab_Personn[$rand];
         
         print_r($personn);
 
@@ -157,6 +142,13 @@ class Game extends CI_Controller
         }
 
         return $tags;
+    }
+    
+    public function personnInArrayString(){
+        foreach ( $this->personnConcerned as $personn){
+            $personns[] = $personn->getUsername();
+        }
+        return $personns;
     }
 
     public function index()
