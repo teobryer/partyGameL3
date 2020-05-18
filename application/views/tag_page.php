@@ -10,6 +10,12 @@
 				<?php 
 				if (!empty($tagsExcludePersonne)){
 					foreach ($tagsExcludePersonne as $key => $item) {
+						//enlève les tags déjà présents dans tagsExcludePersonne
+						/*foreach ($allTags as $key2 => $item2) {
+							if ($item === $item2){
+								unset($allTags[$key2]);
+							}
+						}*/
 						echo "<h2 class='mr-2' id='Etag".$key."'>
 								<span class='badge badge-danger'>
 									<span class='badge badge-warning text-white' onclick='hideTagToUnknown(\"Etag".$key."\", \"".ucfirst($item['textTag'])."\");'>&times;</span> ".ucfirst($item['textTag'])."</span>
@@ -90,13 +96,13 @@ function hideTagToUnknown(tagnumber, tagtext) {
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagUnknown").appendChild(node);
-
 }
 
 function saveTags() {
   	document.getElementById("saveBtn").disabled = true;
-	console.log(allTagsJS);
-	//$.post('file.php', {variable: allTagsJS});
+	console.log(tagsExcludePersonneJS);
+	document.cookie="tagsExcludePersonneJS=John;expires=Wed, 18 Dec 2023 12:00:00 GMT"
+	window.location.replace("http://localhost/account/tag");
 }
 
 </script>

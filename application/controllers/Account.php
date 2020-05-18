@@ -226,9 +226,12 @@ class Account extends CI_Controller {
 
     public function tag()
     {
+        if (!empty($_COOKIE['tagsExcludePersonneJS'])){
+            print_r("TTTTTTTTTTTTTTT");
+        }
         $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
         $tagsExclude = $personne->getjsonContent("tagsExclude");
-        $tagsExclude = (array)$tagsExclude;
+        $tagsExclude = json_decode(json_encode($tagsExclude), true);
         $data['title'] = "Tags";
         $data['allTags'] = $this->personne_model->getAllTags();
         $data['tagsExcludePersonne'] = $tagsExclude;
