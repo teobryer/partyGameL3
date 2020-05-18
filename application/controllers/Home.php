@@ -9,7 +9,7 @@ class Home extends CI_Controller {
         $this->load->model('home_model');
         $this->load->helper('url');
         $this->load->library('session');
-      
+     //   $this->session->unset_userdata('instancePartie');
     }   
     
     
