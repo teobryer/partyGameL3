@@ -47,8 +47,8 @@
 </div>
 
 <script>
-let allTagsJS = <?php echo json_encode($allTags); ?>;
 let tagsExcludePersonneJS = <?php echo json_encode($tagsExcludePersonne, JSON_FORCE_OBJECT); ?>;
+tagsExcludePersonneJS = Array.from(Object.values(tagsExcludePersonneJS));
 
 function hideTagToExclude(tagnumber, tagtext) {
 	document.getElementById("saveBtn").disabled = false;
@@ -66,17 +66,12 @@ function hideTagToExclude(tagnumber, tagtext) {
 	let textnode = document.createTextNode(" "+tagtext);   
 	spanDelete.appendChild(deleteCross);
 	container.appendChild(spanDelete);
-	//tagnumber[0] = 'U';
 	spanDelete.onclick = function() { hideTagToUnknown(tagnumber, tagtext); };
 	container.appendChild(textnode);
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagExclude").appendChild(node);
 	let objet = { idTag: tagnumber, textTag: tagtext };
-	//let objetObj = new Object();
-	//objetObj.push(objet);
-	//console.log(objetObj);
-	tagsExcludePersonneJS = Array.from(Object.values(tagsExcludePersonneJS));
 	tagsExcludePersonneJS.push(objet);
 }
 
@@ -97,17 +92,16 @@ function hideTagToUnknown(tagnumber, tagtext) {
 	spanAdd.appendChild(deleteCross);
 	container.appendChild(textnode);
 	container.appendChild(spanAdd);
-	//tagnumber[0] = 'E';
 	spanAdd.onclick = function() { hideTagToExclude(tagnumber, tagtext); };
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagUnknown").appendChild(node);
+	tagsExcludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idTag) { tagsExcludePersonneJS.splice(index, 1); }} );
 }
 
 function saveTags() {
   	document.getElementById("saveBtn").disabled = true;
-	console.log(tagsExcludePersonneJS);
-	console.log(allTagsJS);
+	//console.log(tagsExcludePersonneJS);
 	document.cookie="tagsExcludePersonneJS="+JSON.stringify(tagsExcludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT"
 	window.location.replace("http://localhost/account/tag");
 }
