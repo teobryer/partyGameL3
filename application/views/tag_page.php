@@ -49,6 +49,7 @@
 <script>
 let tagsExcludePersonneJS = <?php echo json_encode($tagsExcludePersonne, JSON_FORCE_OBJECT); ?>;
 tagsExcludePersonneJS = Array.from(Object.values(tagsExcludePersonneJS));
+let siteUrlJS = <?php echo json_encode(site_url()); ?>;
 
 function hideTagToExclude(tagnumber, tagtext) {
 	document.getElementById("saveBtn").disabled = false;
@@ -103,7 +104,7 @@ function saveTags() {
   	document.getElementById("saveBtn").disabled = true;
 	//console.log(tagsExcludePersonneJS);
 	document.cookie="tagsExcludePersonneJS="+JSON.stringify(tagsExcludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT"
-	window.location.replace("http://localhost/account/tag");
+	window.location.replace(siteUrlJS+"account/tag");
 }
 
 </script>
