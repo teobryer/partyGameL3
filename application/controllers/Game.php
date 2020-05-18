@@ -65,7 +65,13 @@ class Game extends CI_Controller
             $this->tab_BgColor = $this->session->userdata('instancePartie')->tab_BgColor;
         }
     }
-
+    
+    
+    public function reloadNewGame(){
+        $this->session->unset_userdata('instancePartie');
+        header('Location: '.site_url().'game');
+        
+    }
     public function drawPledge()
     {
         $this->personnConcerned = array();
