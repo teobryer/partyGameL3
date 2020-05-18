@@ -31,6 +31,9 @@
 </div>
 
 <script>
+let variableRecuperee = <?php echo json_encode($allTags); ?>;
+
+
 function hideTagToExclude(tagnumber, tagtext) {
   	document.getElementById(tagnumber).remove();
   	let node = document.createElement("h2");
