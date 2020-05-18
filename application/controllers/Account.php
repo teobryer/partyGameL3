@@ -230,8 +230,8 @@ class Account extends CI_Controller {
         $tagsExclude = $personne->getjsonContent("tagsExclude");
         $tagsExclude = (array)$tagsExclude;
         $data['title'] = "Tags";
-        $data['inventory'] = $tagsExclude;
         $data['allTags'] = $this->personne_model->getAllTags();
+        $data['tagsExcludePersonne'] = $tagsExclude;
         $this->load->view('Templates/header', $data);
 		$this->load->view('tag_page');
         $this->load->view('Templates/footer');

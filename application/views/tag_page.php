@@ -8,9 +8,13 @@
 			<div class="card-body container row mx-auto overflow-auto" id="divTagExclude">
 				<!-- Items -->
 				<?php 
-				if (!empty($allTags)){
-					foreach ($allTags as $key => $item) {
-						echo "<h2 class='mr-2' id='Etag".$key."'><span class='badge badge-danger'><span class='badge badge-warning text-white' onclick='hideTagToUnknown(\"Etag".$key."\", \"".ucfirst($item['textTag'])."\");'>&times;</span> ".ucfirst($item['textTag'])."</span></span></h2>";
+				if (!empty($tagsExcludePersonne)){
+					foreach ($tagsExcludePersonne as $key => $item) {
+						echo "<h2 class='mr-2' id='Etag".$key."'>
+								<span class='badge badge-danger'>
+									<span class='badge badge-warning text-white' onclick='hideTagToUnknown(\"Etag".$key."\", \"".ucfirst($item['textTag'])."\");'>&times;</span> ".ucfirst($item['textTag'])."</span>
+								</span>
+							</h2>";
 					};
 				}
 				?>
@@ -20,21 +24,28 @@
 				<!-- Items -->
 				<?php 
 					foreach ($allTags as $key => $item) {
-						echo "<h2 class='mr-2' id='Utag".$key."'><span class='badge badge-secondary'> ".ucfirst($item['textTag'])." <span class='badge badge-success' onclick='hideTagToExclude(\"Utag".$key."\", \"".ucfirst($item['textTag'])."\");'>+</span></span></h2>";
+						echo "<h2 class='mr-2' id='Utag".$key."'>
+								<span class='badge badge-secondary'> ".ucfirst($item['textTag'])." 
+									<span class='badge badge-success' onclick='hideTagToExclude(\"Utag".$key."\", \"".ucfirst($item['textTag'])."\");'>+</span>
+								</span>
+							</h2>";
 					};
 				?>
 			</div>
-			
+			<div class="card-footer">
+				<button type="button" id="saveBtn" class="btn btn-success btn-lg mx-auto col-8" onclick='saveTags();' disabled>Save Changes</button>
+			</div>
 		</div>
 	</div>
 </div>
 </div>
 
 <script>
-let variableRecuperee = <?php echo json_encode($allTags); ?>;
-
+let allTagsJS = <?php echo json_encode($allTags); ?>;
+let tagsExcludePersonneJS = <?php echo json_encode($tagsExcludePersonne); ?>;
 
 function hideTagToExclude(tagnumber, tagtext) {
+	document.getElementById("saveBtn").disabled = false;
   	document.getElementById(tagnumber).remove();
   	let node = document.createElement("h2");
 	node.classList.add("mr-2"); 
@@ -58,6 +69,7 @@ function hideTagToExclude(tagnumber, tagtext) {
 }
 
 function hideTagToUnknown(tagnumber, tagtext) {
+	document.getElementById("saveBtn").disabled = false;
   	document.getElementById(tagnumber).remove();
   	let node = document.createElement("h2");
 	node.classList.add("mr-2"); 
@@ -78,6 +90,10 @@ function hideTagToUnknown(tagnumber, tagtext) {
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagUnknown").appendChild(node);
+}
+
+function saveTags() {
+  	document.getElementById("saveBtn").disabled = true;
 }
 
 </script>
