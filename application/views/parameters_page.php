@@ -2,7 +2,7 @@
 	<div class="h-100 row">
 		<div class="card text-center text-white bg-primary col-12">
 			<div class="card-header">
-				<h1>Game Parameters</h1>
+				<h1>Game Settings</h1>
 			</div>
 			<div class="card-body container">
 				<!-- Input Personne -->

@@ -11,6 +11,7 @@ class Parameters extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->session->unset_userdata('instancePartie');
     }   
     
 
@@ -18,7 +19,7 @@ class Parameters extends CI_Controller {
 	{
         if ($this->session->has_userdata('email')){
             $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
-            $data['title'] = "Parameters";
+            $data['title'] = "Game Settings";
             $data['guests'] = $CurrentPersonne->getjsonContent("guests");
             $this->load->view('Templates/header', $data);
 		    $this->load->view('parameters_page');
