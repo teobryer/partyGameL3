@@ -9,16 +9,16 @@
 				<!-- Items -->
 				<?php 
 				if (!empty($tagsExcludePersonne)){
-					foreach ($tagsExcludePersonne as $key => $item) {
+					foreach ($tagsExcludePersonne as $item) {
 						//enlève les tags déjà présents dans tagsExcludePersonne
-						/*foreach ($allTags as $key2 => $item2) {
-							if ($item === $item2){
+						foreach ($allTags as $key2 => $item2) {
+							if ($item['idTag'] === $item2['idTag']){
 								unset($allTags[$key2]);
 							}
-						}*/
-						echo "<h2 class='mr-2' id='Etag".$key."'>
+						}
+						echo "<h2 class='mr-2' id='".$item['idTag']."'>
 								<span class='badge badge-danger'>
-									<span class='badge badge-warning text-white' onclick='hideTagToUnknown(\"Etag".$key."\", \"".ucfirst($item['textTag'])."\");'>&times;</span> ".ucfirst($item['textTag'])."</span>
+									<span class='badge badge-warning text-white' onclick='hideTagToUnknown(\"".$item['idTag']."\", \"".ucfirst($item['textTag'])."\");'>&times;</span> ".ucfirst($item['textTag'])."</span>
 								</span>
 							</h2>";
 					};
@@ -30,9 +30,9 @@
 				<!-- Items -->
 				<?php 
 					foreach ($allTags as $key => $item) {
-						echo "<h2 class='mr-2' id='Utag".$key."'>
+						echo "<h2 class='mr-2' id='".$item['idTag']."'>
 								<span class='badge badge-secondary'> ".ucfirst($item['textTag'])." 
-									<span class='badge badge-success' onclick='hideTagToExclude(\"Utag".$key."\", \"".ucfirst($item['textTag'])."\");'>+</span>
+									<span class='badge badge-success' onclick='hideTagToExclude(\"".$item['idTag']."\", \"".ucfirst($item['textTag'])."\");'>+</span>
 								</span>
 							</h2>";
 					};
@@ -48,7 +48,7 @@
 
 <script>
 let allTagsJS = <?php echo json_encode($allTags); ?>;
-let tagsExcludePersonneJS = <?php echo json_encode($tagsExcludePersonne); ?>;
+let tagsExcludePersonneJS = <?php echo json_encode($tagsExcludePersonne, JSON_FORCE_OBJECT); ?>;
 
 function hideTagToExclude(tagnumber, tagtext) {
 	document.getElementById("saveBtn").disabled = false;
@@ -72,6 +72,12 @@ function hideTagToExclude(tagnumber, tagtext) {
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagExclude").appendChild(node);
+	let objet = { idTag: tagnumber, textTag: tagtext };
+	//let objetObj = new Object();
+	//objetObj.push(objet);
+	//console.log(objetObj);
+	tagsExcludePersonneJS = Array.from(Object.values(tagsExcludePersonneJS));
+	tagsExcludePersonneJS.push(objet);
 }
 
 function hideTagToUnknown(tagnumber, tagtext) {
@@ -101,7 +107,8 @@ function hideTagToUnknown(tagnumber, tagtext) {
 function saveTags() {
   	document.getElementById("saveBtn").disabled = true;
 	console.log(tagsExcludePersonneJS);
-	document.cookie="tagsExcludePersonneJS=John;expires=Wed, 18 Dec 2023 12:00:00 GMT"
+	console.log(allTagsJS);
+	document.cookie="tagsExcludePersonneJS="+JSON.stringify(tagsExcludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT"
 	window.location.replace("http://localhost/account/tag");
 }
 

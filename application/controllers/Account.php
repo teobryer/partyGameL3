@@ -226,10 +226,35 @@ class Account extends CI_Controller {
 
     public function tag()
     {
-        if (!empty($_COOKIE['tagsExcludePersonneJS'])){
-            print_r("TTTTTTTTTTTTTTT");
-        }
         $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+        if (!empty($_COOKIE['tagsExcludePersonneJS'])){
+            $newtagsExcludePersonne = $_COOKIE['tagsExcludePersonneJS'];
+            //print_r($_COOKIE['tesds']);
+            $newtagsExcludePersonne = json_decode($newtagsExcludePersonne);
+            $newtagsExcludePersonne = (array)$newtagsExcludePersonne;
+            setcookie ("tagsExcludePersonneJS", "", time() - 3600);
+            $tagsExcludeArray = [];
+            //print_r(json_decode($newtagsExcludePersonne));
+            foreach ($newtagsExcludePersonne as $tag) {
+                //$tagsExclude[] = 
+                //print_r(((array)$tag)['idTag']);
+                //print_r(((array)$tag)['textTag']);
+                $tagsExcludeArray[] = json_decode('{ "idTag":"'.((array)$tag)['idTag'].'", "textTag":"'.((array)$tag)['textTag'].'"}');
+            }
+            //print_r(json_encode($tagsExcludeArray, JSON_FORCE_OBJECT));
+            //print_r($tagsExcludeArray);
+            //$tagsExclude = $newtagsExcludePersonne;
+            $Alljson = $personne->getjsonContent();
+            //print_r($Alljson);
+            $Alljson = (array)$Alljson;
+            unset($Alljson['tagsExclude']);
+            //$tagsExclude = json_encode($tagsExclude, JSON_FORCE_OBJECT);
+            //"tagsExclude":{"0":{"idTag":"6","textTag":"relou"},"1":{"idTag":"11","textTag":"drole"}}}
+            $Alljson['tagsExclude'] = $tagsExcludeArray;
+            $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
+            $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
+            
+        }
         $tagsExclude = $personne->getjsonContent("tagsExclude");
         $tagsExclude = json_decode(json_encode($tagsExclude), true);
         $data['title'] = "Tags";
