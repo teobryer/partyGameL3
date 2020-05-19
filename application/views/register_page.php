@@ -45,12 +45,12 @@
 										</svg>
 									</div>
 								</div>
-								<select class="custom-select form-control" id="inlineFormCustomSelect">
-									<option value="1" selected>1-9 years old</option>
-									<option value="2">10-13 years old</option>
-									<option value="3">14-17 years old</option>
-									<option value="4">18-21 years old</option>
-									<option value="5">22-107 years old</option>
+								<select class="custom-select form-control" name="yearsOld" id="yearsOld">
+									<option value="1-9" selected>1-9 years old</option>
+									<option value="10-13">10-13 years old</option>
+									<option value="14-17">14-17 years old</option>
+									<option value="18-21">18-21 years old</option>
+									<option value="22-107">22-107 years old</option>
 								</select>
 							</div>
 						</span>

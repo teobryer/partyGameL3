@@ -136,6 +136,7 @@ class Account extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email','Email address', 'required');
         $this->form_validation->set_rules('password','Password', 'required');
+        $this->form_validation->set_rules('yearsOld','Years Old', 'required');
         if($this->form_validation->run() === FALSE)
         {
             $data['title'] = "Register";
@@ -144,8 +145,9 @@ class Account extends CI_Controller {
             $username = $this->input->post('username');
             $email = $this->input->post('email');
             $password = $this->input->post('password');
+            $yearsOld = $this->input->post('yearsOld');
             $passwordHashed = hash('sha256',$password);
-            $this->personne_model->insertPersonne($username, $email, $passwordHashed);
+            $this->personne_model->insertPersonne($username, $email, $passwordHashed, $yearsOld);
             $CurrentPersonne = $this->personne_model->getPersonne($email);
                 $data['title'] = "Account";
                 $data['guests'] = $CurrentPersonne->getjsonContent("guests");

@@ -144,19 +144,19 @@ class Personne_Model extends CI_Model{
             $this->db->update('PERSONNE', $data);
     } 
 
-    public function insertPersonne($username, $email, $passwordHashed)
+    public function insertPersonne($username, $email, $passwordHashed, $yearsOld)
     {
             $dataPersonne = array(
                 'username'          => $username,
                 'email'             => $email,
                 'password'          => $passwordHashed,
-                'jsonContent'       => "{\"inventory\":{},\"inventoryExclude\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\", \"yearsOld\" : \"18\"}"
+                'jsonContent'       => "{\"inventory\":{},\"inventoryExclude\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\", \"yearsOld\" : \"".$yearsOld."\"}"
             );
             $personneTest = array(
                 'username'          => $username,
                 'email'             => $email,
                 'passwordHashed'    => $passwordHashed,
-                'jsonContent'       => "{\"inventory\":{},\"inventoryExclude\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\", \"yearsOld\" : \"18\"}",
+                'jsonContent'       => "{\"inventory\":{},\"inventoryExclude\":{},\"guests\":{},\"tagsExclude\":{},\"alcoholFriendly\":\"False\",\"sex\":\"Female\", \"yearsOld\" : \"".$yearsOld."\"}",
                 'logged_in'         => TRUE
                 );
             $this->db->insert('PERSONNE', $dataPersonne);
