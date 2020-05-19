@@ -215,25 +215,26 @@ class Account extends CI_Controller {
     {
         $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
         if (!empty($_COOKIE['inventoryExcludePersonneJS'])){
-            $newtagsExcludePersonne = $_COOKIE['inventoryExcludePersonneJS'];
-            $newtagsExcludePersonne = json_decode($newtagsExcludePersonne);
-            $newtagsExcludePersonne = (array)$newtagsExcludePersonne;
+            $newinventoryExcludePersonne = $_COOKIE['inventoryExcludePersonneJS'];
+            $newinventoryExcludePersonne = json_decode($newinventoryExcludePersonne);
+            $newinventoryExcludePersonne = (array)$newinventoryExcludePersonne;
+            print_r($newinventoryExcludePersonne);
             setcookie ("inventoryExcludePersonneJS", "", time() - 3600);
-            /*$tagsExcludeArray = [];
-            foreach ($newtagsExcludePersonne as $tag) {
-                $tagsExcludeArray[] = json_decode('{ "idTag":"'.((array)$tag)['idTag'].'", "textTag":"'.((array)$tag)['textTag'].'"}');
+            $inventoryExcludeArray = [];
+            foreach ($newinventoryExcludePersonne as $item) {
+                $inventoryExcludeArray[] = json_decode('{ "idItem":"'.((array)$item)['idItem'].'", "textItem":"'.((array)$item)['textItem'].'"}');
             }
             $Alljson = $personne->getjsonContent();
             $Alljson = (array)$Alljson;
-            unset($Alljson['tagsExclude']);
-            $Alljson['tagsExclude'] = $tagsExcludeArray;
+            unset($Alljson['inventoryExclude']);
+            $Alljson['inventoryExclude'] = $inventoryExcludeArray;
             $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
-            $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));*/
+            $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
         }
         if (!empty($_COOKIE['inventoryIncludePersonneJS'])){
-            $newtagsExcludePersonne = $_COOKIE['inventoryIncludePersonneJS'];
-            $newtagsExcludePersonne = json_decode($newtagsExcludePersonne);
-            $newtagsExcludePersonne = (array)$newtagsExcludePersonne;
+            $newinventoryIncludePersonne = $_COOKIE['inventoryIncludePersonneJS'];
+            //$newtagsExcludePersonne = json_decode($newtagsExcludePersonne);
+            //$newtagsExcludePersonne = (array)$newtagsExcludePersonne;
             setcookie ("inventoryIncludePersonneJS", "", time() - 3600);
             /*$tagsExcludeArray = [];
             foreach ($newtagsExcludePersonne as $tag) {

@@ -105,8 +105,9 @@ function hideTagToInclude(tagnumber, tagtext) {
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagInclude").appendChild(node);
-	let objet = { idTag: tagnumber, textTag: tagtext };
-	//tagsExcludePersonneJS.push(objet);
+	let objet = { idItem: tagnumber, textItem: tagtext };
+	inventoryExcludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idItem) { inventoryExcludePersonneJS.splice(index, 1); }} );
+	inventoryIncludePersonneJS.push(objet);
 }
 
 
@@ -139,8 +140,9 @@ function hideTagToExclude(tagnumber, tagtext) {
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagExclude").appendChild(node);
-	let objet = { idTag: tagnumber, textTag: tagtext };
-	//tagsExcludePersonneJS.push(objet);
+	let objet = { idItem: tagnumber, textItem: tagtext };
+	inventoryIncludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idItem) { inventoryIncludePersonneJS.splice(index, 1); }} );
+	inventoryExcludePersonneJS.push(objet);
 }
 
 function hideTagToUnknown(tagnumber, tagtext) {
@@ -173,14 +175,14 @@ function hideTagToUnknown(tagnumber, tagtext) {
 	node.id = tagnumber;
 	document.getElementById("divTagUnknown").appendChild(node);
 	inventoryExcludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idItem) { inventoryExcludePersonneJS.splice(index, 1); }} );
-	inventoryIncludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idItem) { inventoryExcludePersonneJS.splice(index, 1); }} );
+	inventoryIncludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idItem) { inventoryIncludePersonneJS.splice(index, 1); }} );
 }
 
 function saveTags() {
   	document.getElementById("saveBtn").disabled = true;
 	//console.log(tagsExcludePersonneJS);
 	document.cookie="inventoryIncludePersonneJS="+JSON.stringify(inventoryIncludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT";
-	document.cookie="inventoryIncludePersonneJS="+JSON.stringify(inventoryExcludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT";
+	document.cookie="inventoryExcludePersonneJS="+JSON.stringify(inventoryExcludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT";
 	window.location.replace(siteUrlJS+"account/inventory");
 }
 
