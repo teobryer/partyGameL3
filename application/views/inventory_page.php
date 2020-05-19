@@ -8,18 +8,42 @@
 			<div class="card-body container row mx-auto" id="divTagInclude">
 				<!-- Items -->
 				<?php 
-					//foreach ($inventoryIncludePersonne as $key => $item) {
-					//	echo "<h2 class='mr-2'><span class='badge badge-success'><span class='badge badge-danger'>&times;</span> ".ucfirst($item['textItem'])." <span class='badge badge-secondary'>?</span></span></h2>";
-					//};
+					foreach ($inventoryIncludePersonne as $key => $item) {
+						//enlève les tags déjà présents dans tagsExcludePersonne
+						foreach ($allInventory as $key2 => $item2) {
+							if ($item['idItem'] === $item2['idItem']){
+								unset($allInventory[$key2]);
+							}
+						}
+						echo "<h2 class='mr-2' id='".$item['idItem']."'>
+								<span class='badge badge-success'>
+									<span class='badge badge-danger' onclick='hideTagToExclude(\"".$item['idItem']."\", \"".ucfirst($item['textItem'])."\");'>&times;</span> "
+									.ucfirst($item['textItem'])." 
+									<span class='badge badge-secondary' onclick='hideTagToUnknown(\"".$item['idItem']."\", \"".ucfirst($item['textItem'])."\");'>?</span>
+								</span>
+							</h2>";
+					};
 				?>
 			</div>
 			<h2>Inventory Exlude</h2>
 			<div class="card-body container row mx-auto overflow-auto" id="divTagExclude">
 				<!-- Items -->
 				<?php 
-					//foreach ($inventoryExcludePersonne as $key => $item) {
-					//	echo "<h2 class='mr-2'><span class='badge badge-danger'><span class='badge badge-secondary'>?</span> ".ucfirst($item['textItem'])." <span class='badge badge-success'>+</span></span></h2>";
-					//};
+					foreach ($inventoryExcludePersonne as $key => $item) {
+						//enlève les tags déjà présents dans tagsExcludePersonne
+						foreach ($allInventory as $key2 => $item2) {
+							if ($item['idItem'] === $item2['idItem']){
+								unset($allInventory[$key2]);
+							}
+						}
+						echo "<h2 class='mr-2' id='".$item['idItem']."'>
+								<span class='badge badge-danger'>
+									<span class='badge badge-secondary' onclick='hideTagToUnknown(\"".$item['idItem']."\", \"".ucfirst($item['textItem'])."\");'>?</span> "
+									.ucfirst($item['textItem'])." 
+									<span class='badge badge-success' onclick='hideTagToInclude(\"".$item['idItem']."\", \"".ucfirst($item['textItem'])."\");'>+</span>
+								</span>
+							</h2>";
+					};
 				?>
 			</div>
 			<h2>Inventory Unknown</h2>
@@ -148,13 +172,15 @@ function hideTagToUnknown(tagnumber, tagtext) {
 	node.appendChild(container);
 	node.id = tagnumber;
 	document.getElementById("divTagUnknown").appendChild(node);
-	//tagsExcludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idTag) { tagsExcludePersonneJS.splice(index, 1); }} );
+	inventoryExcludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idItem) { inventoryExcludePersonneJS.splice(index, 1); }} );
+	inventoryIncludePersonneJS.forEach(function (element, index) { if (tagnumber == element.idItem) { inventoryExcludePersonneJS.splice(index, 1); }} );
 }
 
 function saveTags() {
   	document.getElementById("saveBtn").disabled = true;
 	//console.log(tagsExcludePersonneJS);
-	document.cookie="tagsExcludePersonneJS="+JSON.stringify(tagsExcludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT"
+	document.cookie="inventoryIncludePersonneJS="+JSON.stringify(inventoryIncludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT";
+	document.cookie="inventoryIncludePersonneJS="+JSON.stringify(inventoryExcludePersonneJS)+";expires=Wed, 18 Dec 2023 12:00:00 GMT";
 	window.location.replace(siteUrlJS+"account/inventory");
 }
 

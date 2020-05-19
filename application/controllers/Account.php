@@ -214,10 +214,42 @@ class Account extends CI_Controller {
     public function inventory()
     {
         $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+        if (!empty($_COOKIE['inventoryExcludePersonneJS'])){
+            $newtagsExcludePersonne = $_COOKIE['inventoryExcludePersonneJS'];
+            $newtagsExcludePersonne = json_decode($newtagsExcludePersonne);
+            $newtagsExcludePersonne = (array)$newtagsExcludePersonne;
+            setcookie ("inventoryExcludePersonneJS", "", time() - 3600);
+            /*$tagsExcludeArray = [];
+            foreach ($newtagsExcludePersonne as $tag) {
+                $tagsExcludeArray[] = json_decode('{ "idTag":"'.((array)$tag)['idTag'].'", "textTag":"'.((array)$tag)['textTag'].'"}');
+            }
+            $Alljson = $personne->getjsonContent();
+            $Alljson = (array)$Alljson;
+            unset($Alljson['tagsExclude']);
+            $Alljson['tagsExclude'] = $tagsExcludeArray;
+            $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
+            $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));*/
+        }
+        if (!empty($_COOKIE['inventoryIncludePersonneJS'])){
+            $newtagsExcludePersonne = $_COOKIE['inventoryIncludePersonneJS'];
+            $newtagsExcludePersonne = json_decode($newtagsExcludePersonne);
+            $newtagsExcludePersonne = (array)$newtagsExcludePersonne;
+            setcookie ("inventoryIncludePersonneJS", "", time() - 3600);
+            /*$tagsExcludeArray = [];
+            foreach ($newtagsExcludePersonne as $tag) {
+                $tagsExcludeArray[] = json_decode('{ "idTag":"'.((array)$tag)['idTag'].'", "textTag":"'.((array)$tag)['textTag'].'"}');
+            }
+            $Alljson = $personne->getjsonContent();
+            $Alljson = (array)$Alljson;
+            unset($Alljson['tagsExclude']);
+            $Alljson['tagsExclude'] = $tagsExcludeArray;
+            $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
+            $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));*/
+        }
         $inventory = $personne->getjsonContent("inventory");
         $inventoryExclude = $personne->getjsonContent("inventoryExclude");
-        $inventory = (array)$inventory;
-        $inventoryExclude = (array)$inventoryExclude;
+        $inventory = json_decode(json_encode($inventory), true);
+        $inventoryExclude = json_decode(json_encode($inventoryExclude), true);
         $data['title'] = "Inventory";
         $data['inventoryIncludePersonne'] = $inventory;
         $data['inventoryExcludePersonne'] = $inventoryExclude;
