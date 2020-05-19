@@ -215,10 +215,13 @@ class Account extends CI_Controller {
     {
         $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
         $inventory = $personne->getjsonContent("inventory");
+        $inventoryExclude = $personne->getjsonContent("inventoryExclude");
         $inventory = (array)$inventory;
+        $inventoryExclude = (array)$inventoryExclude;
         $data['title'] = "Inventory";
-        $data['inventory'] = $inventory;
-        $data['inventoryExclude'] = $this->personne_model->getAllInventory();
+        $data['inventoryIncludePersonne'] = $inventory;
+        $data['inventoryExcludePersonne'] = $inventoryExclude;
+        $data['allInventory'] = $this->personne_model->getAllInventory();
         $this->load->view('Templates/header', $data);
 		$this->load->view('inventory_page');
         $this->load->view('Templates/footer');
