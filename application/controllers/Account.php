@@ -35,12 +35,14 @@ class Account extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('username','Username', 'required');
+        $this->form_validation->set_rules('yearsOld','Years Old', 'required');
         $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
         if($this->form_validation->run() === TRUE)
         {
             $username = $this->input->post('username');
             $female = $this->input->post('female');
             $alcohol = $this->input->post('alcohol');
+            $yearsOld = $this->input->post('yearsOld');
             if ($female == "on"){
                 $genre = "Female";
             } else {
@@ -51,18 +53,18 @@ class Account extends CI_Controller {
             } else {
                 $alcoholFriendly = "False";
             }
-            $this->addGuestAtAPersonne($CurrentPersonne, $username, ["casserole" , "assiettes"], $alcoholFriendly, $genre);
+            $this->addGuestAtAPersonne($CurrentPersonne, $username, ["casserole" , "assiettes"], $alcoholFriendly, $genre, $yearsOld);
         }
     }
     
 
-    private function addGuestAtAPersonne($personne, $guestUsername, $guestInventory, $guestAlcoholFriendly, $guestSex)
+    private function addGuestAtAPersonne($personne, $guestUsername, $guestInventory, $guestAlcoholFriendly, $guestSex, $guestYearsOld)
     {
         $guests = $personne->getjsonContent("guests");
         $Alljson = $personne->getjsonContent();
         $guests = (array)$guests;
         $guestInventory = "\"".implode('","',$guestInventory)."\"";
-        $guests[] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "inventoryExclude":[], "tagsExclude":[], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'", "yearsOld" : "18" }');
+        $guests[] = json_decode('{ "username":"'.$guestUsername.'", "inventory":[ '.$guestInventory.' ], "inventoryExclude":[], "tagsExclude":[], "alcoholFriendly" : "'.$guestAlcoholFriendly.'", "sex" : "'.$guestSex.'", "yearsOld" : "'.$guestYearsOld.'" }');
         $guests = json_decode(json_encode($guests, JSON_FORCE_OBJECT));
         $Alljson = (array)$Alljson;
         $Alljson['guests'] = $guests;

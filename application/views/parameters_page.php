@@ -61,7 +61,7 @@
 					};
 				?>
 				<!-- Tags à Bannir -->
-				<div class="container">
+				<!-- <div class="container">
 					<select class="selectpicker col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12 mt-5"
 						data-max-options="10" data-size="8" data-style="btn-secondary bg-secondary"
 						data-selected-text-format="count > 6" data-live-search="true"
@@ -74,8 +74,8 @@
 							<option>Hot</option>
 							<option>Sexe</option>
 							<option>Dehors</option>
-					</select>
-					<?php echo "Le selecteur ne marche plus wtf"; ?>
+					</select> -->
+					<?php //echo "Le selecteur ne marche plus wtf"; ?>
 				</div>
 			</div>
 		</div>
