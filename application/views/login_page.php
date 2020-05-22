@@ -53,8 +53,7 @@
 			<div class="card-footer">
 				<div class="text-center">
 					<a href="<?php site_url() ?>register"><button type="button"
-							class="btn btn-secondary col-lg-4 col-xl-4 col-md-6 col-10">Pas encore inscrit
-							?</button></a>
+							class="btn btn-secondary col-lg-4 col-xl-4 col-md-6 col-10">Not registered yet ?</button></a>
 				</div>
 			</div>
 		</div>
