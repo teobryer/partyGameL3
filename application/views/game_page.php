@@ -2,7 +2,7 @@
 	<div class="h-100 row">
 		<div class="card text-center <?php echo $CardColor; ?> col-12">
 			<div class="card-header">
-			<h4>Gage n°<?php echo $num?></h4>
+			<h4>Forfeit n°<?php echo $num?></h4>
 			</div>
 			
 			

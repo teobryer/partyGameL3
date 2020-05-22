@@ -159,22 +159,26 @@ class Game extends CI_Controller
 
     public function index()
     {
-        // $this->drawPledge();
-        // print_r($this->tab_Forfeit);
-        // $this->game_model->getForfeitByTags(array("relou", "sport"));
+        if ($this->session->has_userdata('email')){
+            // $this->drawPledge();
+            // print_r($this->tab_Forfeit);
+            // $this->game_model->getForfeitByTags(array("relou", "sport"));
 
-        // print_r($this->game_model->ReverseListTag(array("hot", "action")));
-        $data['title'] = "Game";
-        $data['gage'] = $this->drawPledge();
+            // print_r($this->game_model->ReverseListTag(array("hot", "action")));
+            $data['title'] = "Game";
+            $data['gage'] = $this->drawPledge();
 
-        $data['num'] = $this->totalGages;
-        $data['CardColor'] = $this->drawCardColor();
-        // print_r($this->actual_Forfeit);
-        $data['tags'] = $this->writeTagsString();
+            $data['num'] = $this->totalGages;
+            $data['CardColor'] = $this->drawCardColor();
+            // print_r($this->actual_Forfeit);
+            $data['tags'] = $this->writeTagsString();
 
-        $this->session->set_userdata('instancePartie', $this);
-        $this->load->view('Templates/header', $data);
-        $this->load->view('game_page', $data);
-        $this->load->view('Templates/footer');
+            $this->session->set_userdata('instancePartie', $this);
+            $this->load->view('Templates/header', $data);
+            $this->load->view('game_page', $data);
+            $this->load->view('Templates/footer');
+        } else {
+            header('Location: '.site_url().'account/login');
+        }
     }
 }

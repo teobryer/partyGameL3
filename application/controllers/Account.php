@@ -161,136 +161,148 @@ class Account extends CI_Controller {
 
     public function changePassword()
     {
-		$this->load->helper('form');
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('Oldpassword','Old password', 'required');
-        $this->form_validation->set_rules('Newpassword','New password', 'required');
-        if($this->form_validation->run() === FALSE)
-        {
-            $data['title'] = "Change Password";
-            $content = 'change_password_page';
-        } else {
-            $newpassword = $this->input->post('Newpassword');
-            $oldpassword = $this->input->post('Oldpassword');
-            $newpasswordHashed = hash('sha256',$newpassword);
-            $oldpasswordHashed = hash('sha256',$oldpassword);
-            $test = $this->personne_model->testOldPassword($oldpasswordHashed);
-            if ($test){
-                if ($newpasswordHashed == $oldpasswordHashed){
+        if ($this->session->has_userdata('email')){
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('Oldpassword','Old password', 'required');
+            $this->form_validation->set_rules('Newpassword','New password', 'required');
+            if($this->form_validation->run() === FALSE)
+            {
+                $data['title'] = "Change Password";
+                $content = 'change_password_page';
+            } else {
+                $newpassword = $this->input->post('Newpassword');
+                $oldpassword = $this->input->post('Oldpassword');
+                $newpasswordHashed = hash('sha256',$newpassword);
+                $oldpasswordHashed = hash('sha256',$oldpassword);
+                $test = $this->personne_model->testOldPassword($oldpasswordHashed);
+                if ($test){
+                    if ($newpasswordHashed == $oldpasswordHashed){
+                        $data['title'] = "Change Password";
+                        $content = 'change_password_page';
+                        echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
+                        <h3>Your <strong>New Password</strong> and your <strong>Old Password</strong> are the same</h3>
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                        </button>
+                        </div>";
+                    } else {
+                        $this->personne_model->changePasswordPersonne($oldpasswordHashed,$newpasswordHashed);
+                        $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
+                        $data['title'] = "Account";
+                        $data['guests'] = $CurrentPersonne->getjsonContent("guests");
+                        $data['nbGuests'] = count((array)$data['guests']);
+                        $content = 'account_page';
+                        echo "<div class='alert alert-success alert-dismissible fade show fixed-bottom text-center' role='alert'>
+                            <h3>Your <strong>Password</strong> has been successfully changed</h3>
+                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                            </button>
+                            </div>";
+                    }
+                } else {
                     $data['title'] = "Change Password";
                     $content = 'change_password_page';
                     echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
-                    <h3>Your <strong>New Password</strong> and your <strong>Old Password</strong> are the same</h3>
+                    <h3>Wrong <strong>Old Password</strong> please retry</h3>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <span aria-hidden='true'>&times;</span>
                     </button>
                     </div>";
-                } else {
-                    $this->personne_model->changePasswordPersonne($oldpasswordHashed,$newpasswordHashed);
-                    $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
-                    $data['title'] = "Account";
-                    $data['guests'] = $CurrentPersonne->getjsonContent("guests");
-                    $data['nbGuests'] = count((array)$data['guests']);
-                    $content = 'account_page';
-                    echo "<div class='alert alert-success alert-dismissible fade show fixed-bottom text-center' role='alert'>
-                        <h3>Your <strong>Password</strong> has been successfully changed</h3>
-                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                        </button>
-                         </div>";
                 }
-            } else {
-                $data['title'] = "Change Password";
-                $content = 'change_password_page';
-                echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
-                <h3>Wrong <strong>Old Password</strong> please retry</h3>
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-                </button>
-                </div>";
             }
+            $this->load->view('Templates/header', $data);
+            $this->load->view($content);
+            $this->load->view('Templates/footer');
+        } else {
+            header('Location: '.site_url().'account/login');
         }
-        $this->load->view('Templates/header', $data);
-		$this->load->view($content);
-        $this->load->view('Templates/footer');
     }
 
     public function inventory()
     {
-        $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
-        if (!empty($_COOKIE['inventoryExcludePersonneJS'])){
-            $newinventoryExcludePersonne = $_COOKIE['inventoryExcludePersonneJS'];
-            $newinventoryExcludePersonne = json_decode($newinventoryExcludePersonne);
-            $newinventoryExcludePersonne = (array)$newinventoryExcludePersonne;
-            setcookie ("inventoryExcludePersonneJS", "", time() - 3600);
-            $inventoryExcludeArray = [];
-            foreach ($newinventoryExcludePersonne as $item) {
-                $inventoryExcludeArray[] = json_decode('{ "idItem":"'.((array)$item)['idItem'].'", "textItem":"'.((array)$item)['textItem'].'"}');
+        if ($this->session->has_userdata('email')){
+            $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+            if (!empty($_COOKIE['inventoryExcludePersonneJS'])){
+                $newinventoryExcludePersonne = $_COOKIE['inventoryExcludePersonneJS'];
+                $newinventoryExcludePersonne = json_decode($newinventoryExcludePersonne);
+                $newinventoryExcludePersonne = (array)$newinventoryExcludePersonne;
+                setcookie ("inventoryExcludePersonneJS", "", time() - 3600);
+                $inventoryExcludeArray = [];
+                foreach ($newinventoryExcludePersonne as $item) {
+                    $inventoryExcludeArray[] = json_decode('{ "idItem":"'.((array)$item)['idItem'].'", "textItem":"'.((array)$item)['textItem'].'"}');
+                }
+                $Alljson = $personne->getjsonContent();
+                $Alljson = (array)$Alljson;
+                unset($Alljson['inventoryExclude']);
+                $Alljson['inventoryExclude'] = $inventoryExcludeArray;
+                $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
+                $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
             }
-            $Alljson = $personne->getjsonContent();
-            $Alljson = (array)$Alljson;
-            unset($Alljson['inventoryExclude']);
-            $Alljson['inventoryExclude'] = $inventoryExcludeArray;
-            $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
-            $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
-        }
-        if (!empty($_COOKIE['inventoryIncludePersonneJS'])){
-            $newinventoryIncludePersonne = $_COOKIE['inventoryIncludePersonneJS'];
-            $newinventoryIncludePersonne = json_decode($newinventoryIncludePersonne);
-            $newinventoryIncludePersonne = (array)$newinventoryIncludePersonne;
-            setcookie ("inventoryIncludePersonneJS", "", time() - 3600);
-            $inventoryIncludeArray = [];
-            foreach ($newinventoryIncludePersonne as $item) {
-                $inventoryIncludeArray[] = json_decode('{ "idItem":"'.((array)$item)['idItem'].'", "textItem":"'.((array)$item)['textItem'].'"}');
+            if (!empty($_COOKIE['inventoryIncludePersonneJS'])){
+                $newinventoryIncludePersonne = $_COOKIE['inventoryIncludePersonneJS'];
+                $newinventoryIncludePersonne = json_decode($newinventoryIncludePersonne);
+                $newinventoryIncludePersonne = (array)$newinventoryIncludePersonne;
+                setcookie ("inventoryIncludePersonneJS", "", time() - 3600);
+                $inventoryIncludeArray = [];
+                foreach ($newinventoryIncludePersonne as $item) {
+                    $inventoryIncludeArray[] = json_decode('{ "idItem":"'.((array)$item)['idItem'].'", "textItem":"'.((array)$item)['textItem'].'"}');
+                }
+                $Alljson = $personne->getjsonContent();
+                $Alljson = (array)$Alljson;
+                unset($Alljson['inventory']);
+                $Alljson['inventory'] = $inventoryIncludeArray;
+                $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
+                $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
             }
-            $Alljson = $personne->getjsonContent();
-            $Alljson = (array)$Alljson;
-            unset($Alljson['inventory']);
-            $Alljson['inventory'] = $inventoryIncludeArray;
-            $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
-            $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
+            $inventory = $personne->getjsonContent("inventory");
+            $inventoryExclude = $personne->getjsonContent("inventoryExclude");
+            $inventory = json_decode(json_encode($inventory), true);
+            $inventoryExclude = json_decode(json_encode($inventoryExclude), true);
+            $data['title'] = "Inventory";
+            $data['inventoryIncludePersonne'] = $inventory;
+            $data['inventoryExcludePersonne'] = $inventoryExclude;
+            $data['allInventory'] = $this->personne_model->getAllInventory();
+            $this->load->view('Templates/header', $data);
+            $this->load->view('inventory_page');
+            $this->load->view('Templates/footer');
+        } else {
+            header('Location: '.site_url().'account/login');
         }
-        $inventory = $personne->getjsonContent("inventory");
-        $inventoryExclude = $personne->getjsonContent("inventoryExclude");
-        $inventory = json_decode(json_encode($inventory), true);
-        $inventoryExclude = json_decode(json_encode($inventoryExclude), true);
-        $data['title'] = "Inventory";
-        $data['inventoryIncludePersonne'] = $inventory;
-        $data['inventoryExcludePersonne'] = $inventoryExclude;
-        $data['allInventory'] = $this->personne_model->getAllInventory();
-        $this->load->view('Templates/header', $data);
-		$this->load->view('inventory_page');
-        $this->load->view('Templates/footer');
     }
 
     public function tag()
     {
-        $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
-        if (!empty($_COOKIE['tagsExcludePersonneJS'])){
-            $newtagsExcludePersonne = $_COOKIE['tagsExcludePersonneJS'];
-            $newtagsExcludePersonne = json_decode($newtagsExcludePersonne);
-            $newtagsExcludePersonne = (array)$newtagsExcludePersonne;
-            setcookie ("tagsExcludePersonneJS", "", time() - 3600);
-            $tagsExcludeArray = [];
-            foreach ($newtagsExcludePersonne as $tag) {
-                $tagsExcludeArray[] = json_decode('{ "idTag":"'.((array)$tag)['idTag'].'", "textTag":"'.((array)$tag)['textTag'].'"}');
+        if ($this->session->has_userdata('email')){
+            $personne = $this->personne_model->getPersonne($this->session->userdata('email'));
+            if (!empty($_COOKIE['tagsExcludePersonneJS'])){
+                $newtagsExcludePersonne = $_COOKIE['tagsExcludePersonneJS'];
+                $newtagsExcludePersonne = json_decode($newtagsExcludePersonne);
+                $newtagsExcludePersonne = (array)$newtagsExcludePersonne;
+                setcookie ("tagsExcludePersonneJS", "", time() - 3600);
+                $tagsExcludeArray = [];
+                foreach ($newtagsExcludePersonne as $tag) {
+                    $tagsExcludeArray[] = json_decode('{ "idTag":"'.((array)$tag)['idTag'].'", "textTag":"'.((array)$tag)['textTag'].'"}');
+                }
+                $Alljson = $personne->getjsonContent();
+                $Alljson = (array)$Alljson;
+                unset($Alljson['tagsExclude']);
+                $Alljson['tagsExclude'] = $tagsExcludeArray;
+                $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
+                $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
+                
             }
-            $Alljson = $personne->getjsonContent();
-            $Alljson = (array)$Alljson;
-            unset($Alljson['tagsExclude']);
-            $Alljson['tagsExclude'] = $tagsExcludeArray;
-            $personne->setjsonContent(json_encode($Alljson, JSON_FORCE_OBJECT));
-            $this->personne_model->setjsonContentPersonne($personne->getemail(), json_encode($Alljson, JSON_FORCE_OBJECT));
-            
+            $tagsExclude = $personne->getjsonContent("tagsExclude");
+            $tagsExclude = json_decode(json_encode($tagsExclude), true);
+            $data['title'] = "Tags";
+            $data['allTags'] = $this->personne_model->getAllTags();
+            $data['tagsExcludePersonne'] = $tagsExclude;
+            $this->load->view('Templates/header', $data);
+            $this->load->view('tag_page');
+            $this->load->view('Templates/footer');
+        } else {
+            header('Location: '.site_url().'account/login');
         }
-        $tagsExclude = $personne->getjsonContent("tagsExclude");
-        $tagsExclude = json_decode(json_encode($tagsExclude), true);
-        $data['title'] = "Tags";
-        $data['allTags'] = $this->personne_model->getAllTags();
-        $data['tagsExcludePersonne'] = $tagsExclude;
-        $this->load->view('Templates/header', $data);
-		$this->load->view('tag_page');
-        $this->load->view('Templates/footer');
     }
     
 
