@@ -19,9 +19,10 @@ class Account extends CI_Controller {
 	{
         if ($this->session->has_userdata('email')){
             $CurrentPersonne = $this->personne_model->getPersonne($this->session->userdata('email'));
-            $data['title'] = "Account";
+            $data['title'] = "Settings";
             $data['guests'] = $CurrentPersonne->getjsonContent("guests");
             $data['nbGuests'] = count((array)$data['guests']);
+            $data['CardColor'] = "text-white bg-success";
             $this->load->view('Templates/header', $data);
 		    $this->load->view('account_page');
             $this->load->view('Templates/footer');
@@ -99,6 +100,7 @@ class Account extends CI_Controller {
         {
             $data['title'] = "Login";
             $content = 'login_page';
+            $data['CardColor'] = "text-white bg-danger";
         } else {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
@@ -109,12 +111,14 @@ class Account extends CI_Controller {
                 $this->session->set_userdata('email', $email);
                 $CurrentPersonne = $this->personne_model->getPersonne($email);
                 $data['title'] = "Account";
+                $data['CardColor'] = "text-white bg-success";
                 $data['guests'] = $CurrentPersonne->getjsonContent("guests");
                 //$this->addGuestAtAPersonne($CurrentPersonne, "Carole", ["casserole" , "assiettes"], "True", "Female");
                 $data['nbGuests'] = count((array)$data['guests']);
                 $content = 'account_page';
             } else {
                 $data['title'] = "Login";
+                $data['CardColor'] = "text-white bg-danger";
                 $content = 'login_page';
                 echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
                             <h3>Please verify your <strong>Email address</strong> ('".$email."') or your <strong>Password</strong>.</h3>
@@ -141,6 +145,7 @@ class Account extends CI_Controller {
         {
             $data['title'] = "Register";
             $content = 'register_page';
+            $data['CardColor'] = "text-white bg-danger";
         } else {
             $username = $this->input->post('username');
             $email = $this->input->post('email');
@@ -150,6 +155,7 @@ class Account extends CI_Controller {
             $this->personne_model->insertPersonne($username, $email, $passwordHashed, $yearsOld);
             $CurrentPersonne = $this->personne_model->getPersonne($email);
                 $data['title'] = "Account";
+                $data['CardColor'] = "text-white bg-success";
                 $data['guests'] = $CurrentPersonne->getjsonContent("guests");
                 $data['nbGuests'] = count((array)$data['guests']);
                 $content = 'account_page';
@@ -170,6 +176,7 @@ class Account extends CI_Controller {
             {
                 $data['title'] = "Change Password";
                 $content = 'change_password_page';
+                $data['CardColor'] = "text-white bg-danger";
             } else {
                 $newpassword = $this->input->post('Newpassword');
                 $oldpassword = $this->input->post('Oldpassword');
@@ -180,6 +187,7 @@ class Account extends CI_Controller {
                     if ($newpasswordHashed == $oldpasswordHashed){
                         $data['title'] = "Change Password";
                         $content = 'change_password_page';
+                        $data['CardColor'] = "text-white bg-danger";
                         echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
                         <h3>Your <strong>New Password</strong> and your <strong>Old Password</strong> are the same</h3>
                         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -193,6 +201,7 @@ class Account extends CI_Controller {
                         $data['guests'] = $CurrentPersonne->getjsonContent("guests");
                         $data['nbGuests'] = count((array)$data['guests']);
                         $content = 'account_page';
+                        $data['CardColor'] = "text-white bg-success";
                         echo "<div class='alert alert-success alert-dismissible fade show fixed-bottom text-center' role='alert'>
                             <h3>Your <strong>Password</strong> has been successfully changed</h3>
                             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -203,6 +212,7 @@ class Account extends CI_Controller {
                 } else {
                     $data['title'] = "Change Password";
                     $content = 'change_password_page';
+                    $data['CardColor'] = "text-white bg-danger";
                     echo "<div class='alert alert-warning alert-dismissible fade show fixed-bottom text-center' role='alert'>
                     <h3>Wrong <strong>Old Password</strong> please retry</h3>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -263,6 +273,7 @@ class Account extends CI_Controller {
             $data['inventoryIncludePersonne'] = $inventory;
             $data['inventoryExcludePersonne'] = $inventoryExclude;
             $data['allInventory'] = $this->personne_model->getAllInventory();
+            $data['CardColor'] = "text-white bg-warning";
             $this->load->view('Templates/header', $data);
             $this->load->view('inventory_page');
             $this->load->view('Templates/footer');
@@ -297,6 +308,7 @@ class Account extends CI_Controller {
             $data['title'] = "Tags";
             $data['allTags'] = $this->personne_model->getAllTags();
             $data['tagsExcludePersonne'] = $tagsExclude;
+            $data['CardColor'] = "text-white bg-info";
             $this->load->view('Templates/header', $data);
             $this->load->view('tag_page');
             $this->load->view('Templates/footer');

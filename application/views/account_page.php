@@ -2,7 +2,7 @@
 	<div class="h-100 row">
 		<div class="card text-center text-white bg-success col-12">
 			<div class="card-header">
-				<h1>Account Settings</h1>
+				<h1>Settings</h1>
 			</div>
 			<div class="card-body container">
 				<!-- Input Personne -->

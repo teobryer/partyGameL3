@@ -60,6 +60,9 @@
 					</div></div>";
 					};
 				?>
+				<div class="container">
+				<h1>This page is deprecated, We need to rework it (it is not normally accessible, please return to the home page)</h1>
+				</div>
 				<!-- Tags à Bannir -->
 				<!-- <div class="container">
 					<select class="selectpicker col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12 mt-5"
