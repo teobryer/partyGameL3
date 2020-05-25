@@ -75,7 +75,16 @@ class Personne {
 
     public function getTagsExclude()
     {
-        return $this->tagsExclude;
+        if ($this->jsonContent !== null){
+            $tagsExcludeT = (array) $this->getjsonContent("tagsExclude");
+            $tagsList = [];
+            foreach ($tagsExcludeT as $textTag) {
+                $tagsList[] = strtolower(((array)$textTag)['textTag']);
+            }
+            return $tagsList;
+        } else {
+            return array();
+        }
     }
 
     public function setTagsExclude($tagsExclude)
