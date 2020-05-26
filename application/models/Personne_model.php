@@ -97,7 +97,16 @@ class Personne {
     }
 
     public function getInventoryExclude(){
-        return $this->inventoryExclude;
+        if ($this->jsonContent !== null){
+            $inventoryExcludeT = (array) $this->getjsonContent("inventoryExclude");
+            $inventoryList = [];
+            foreach ($inventoryExcludeT as $textItem) {
+                $inventoryList[] = strtolower(((array)$textItem)['textItem']);
+            }
+            return $inventoryList;
+        } else {
+            return array();
+        }
     }
 
     public function getYearsOld(){
